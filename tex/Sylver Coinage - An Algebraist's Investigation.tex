@@ -1,0 +1,1080 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> {
+
+\usetheme{CambridgeUS}
+
+\usecolortheme{dolphin}
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage[mathscr]{euscript}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Sylver Coinage]{Sylver Coinage\\An Algebraist's Investigation} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Jeremy L Thompson} % Your name
+\institute[USAFA] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{United States Air Force Academy \\ % Your institution for the title page
+\medskip
+\textit{jeremy.thompson@usafa.edu} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Overview}
+
+Sylver Coinage is a two-player game in which the players alternate choosing natural numbers.\\
+
+~\\
+
+In any turn the player cannot name any number that can be represented as a linear combination of the previously named numbers using non-negative coefficients. The player that must choose the number 1 loses.\\
+
+~\\
+
+In this talk, we investigate what is known about Sylver Coinage as well as how the study of numerical semigroups can inform our strategy.
+
+\end{center}
+\end{frame}
+ 
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Sylver Coinage Game}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Sylver Coinage Game}
+
+Sylver Coinage is a two-player game in which the players alternate choosing natural numbers\\
+
+~\\
+
+In any turn, the player cannot name any number that can be represented as a linear combination of the previously named numbers using non-negative coefficients\\
+
+~\\
+
+The player that must choose the number 1 loses
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example}
+
+Player 1: $10$\\
+
+~\\
+
+M = $\lbrace 10 \rbrace$\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\color{gray} 5}, {\color{gray} 6}, {\color{gray} 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\color{gray} 12}, {\color{gray} 13}, {\color{gray} 14}, {\color{gray} 15}, {\color{gray} 16}, {\color{gray} 17}, {\color{gray} 18}, {\color{gray} 19}, {\bf 20}, {\color{gray} 21}, {\color{gray} 22}, {\color{gray} 23}, {\color{gray} 24}, {\color{gray} 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example}
+
+Player 2: $5$\\
+
+~\\
+
+M = $\lbrace 10, 5 \rbrace$\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\color{gray} 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\color{gray} 12}, {\color{gray} 13}, {\color{gray} 14}, {\bf 15}, {\color{gray} 16}, {\color{gray} 17}, {\color{gray} 18}, {\color{gray} 19}, {\bf 20}, {\color{gray} 21}, {\color{gray} 22}, {\color{gray} 23}, {\color{gray} 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example}
+
+Player 1: $7$\\
+
+~\\
+
+M = $\lbrace 10, 5, 7 \rbrace$\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\color{gray} 16}, {\bf 17}, {\color{gray} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\color{gray} 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example}
+
+Player 2: $23$\\
+
+~\\
+
+M = $\lbrace 10, 5, 7, 23 \rbrace$\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\color{gray} 16}, {\bf 17}, {\color{gray} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example}
+
+Player 1: $6$\\
+
+~\\
+
+M = $\lbrace 10, 5, 7, 23, 6 \rbrace$\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\bf 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\bf 11}, {\bf 12}, {\bf 13}, {\bf 14}, {\bf 15}, {\bf 16}, {\bf 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example}
+
+Player 2: $4$\\
+
+~\\
+
+M = $\lbrace 10, 5, 7, 23, 6, 4 \rbrace$\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\bf 4}, {\bf 5}, {\bf 6}, {\bf 7}, {\bf 8}, {\bf 9}, {\bf 10}, {\bf 11}, {\bf 12}, {\bf 13}, {\bf 14}, {\bf 15}, {\bf 16}, {\bf 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example}
+
+Player 1: $3$\\
+
+~\\
+
+M = $\lbrace 10, 5, 7, 23, 6, 4, 3 \rbrace$\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\bf 3}, {\bf 4}, {\bf 5}, {\bf 6}, {\bf 7}, {\bf 8}, {\bf 9}, {\bf 10}, {\bf 11}, {\bf 12}, {\bf 13}, {\bf 14}, {\bf 15}, {\bf 16}, {\bf 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example}
+
+Player 2: $2$\\
+
+~\\
+
+M = $\lbrace 10, 5, 7, 23, 6, 4, 3, 2 \rbrace$\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{red} 1}, {\bf 2}, {\bf 3}, {\bf 4}, {\bf 5}, {\bf 6}, {\bf 7}, {\bf 8}, {\bf 9}, {\bf 10}, {\bf 11}, {\bf 12}, {\bf 13}, {\bf 14}, {\bf 15}, {\bf 16}, {\bf 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+Player 2 Wins!
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{Numerical Semigroup}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Numerical Semigroups}
+
+A subset $S$ of $\mathbb{N}$ closed under addition, containing zero, and having a largest integer not in $S$\\
+
+~\\
+
+OR\\
+
+~\\
+
+The set $S$ of all non-negative coefficient linear combinations of a set of generators whose greatest common divisor is $1$
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example}
+
+Player 1: $7$\\
+
+~\\
+
+M = $\lbrace 10, 5, 7 \rbrace$\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\color{gray} 16}, {\bf 17}, {\color{gray} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\color{gray} 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example}
+
+~\\
+
+~\\
+
+S = $\langle 5, 7 \rangle$\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\color{gray} 16}, {\bf 17}, {\color{gray} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\color{gray} 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{Definitions}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Definitions}
+
+Numerical Semigroups and Sylver Coinage have
+
+very different terminology for the same properties
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Moves/Generators}
+
+~\\
+
+M = $\lbrace 10, 5, 7 \rbrace$ Moves\\
+
+S = $\langle 5, 7 \rangle$ Generators\\
+
+~\\
+{\flushleft
+M - Position, a set of moves\\
+
+S - Numerical Semigroup, a set of linear combinations\\
+}
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\color{gray} 16}, {\bf 17}, {\color{gray} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\color{gray} 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{$\mathscr{N}$ and $\mathscr{P}$}
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+{\flushleft
+$\mathscr{N}$ - a position $M$ where the next player can win\\
+
+$\mathscr{P}$ - all other positions, previous to $\mathscr{N}$\\
+}
+~\\
+
+~\\
+
+~\\
+
+{\small ~\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{g.c.d.}
+
+~\\
+
+M = $\lbrace 10, 5, 7 \rbrace$\\
+
+S = $\langle 5, 7 \rangle$\\
+
+~\\
+{\flushleft
+g - $g.c.d. \left( M \right)$\\
+
+Note: $g = 1$ for Numerical Semigroup\\
+}
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\color{gray} 16}, {\bf 17}, {\color{gray} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\color{gray} 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Frobenius Number}
+
+~\\
+
+M = $\lbrace 10, 5, 7 \rbrace$\\
+
+S = $\langle 5, 7 \rangle$\\
+
+~\\
+{\flushleft
+$t \left( M \right)$ - If $g.c.d \left( M \right) = 1$, $t \left( M \right)$ is the greatest legal move\\
+
+$F \left( S \right)$ - greatest number not in $S$\\
+}
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\color{gray} 16}, {\bf 17}, {\color{gray} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\color{red} 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{End}
+
+~\\
+
+M = $\lbrace 10, 5, 7, 23 \rbrace$\\
+
+S = $\langle 5, 7, 23 \rangle$\\
+
+~\\
+{\flushleft
+End - all moves $x$ that do not eliminate any other move\\
+
+~\\
+}
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\color{red} 16}, {\bf 17}, {\color{red} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Pesudo-Frobenius Number}
+
+~\\
+
+M = $\lbrace 10, 5, 7, 23 \rbrace$\\
+
+S = $\langle 5, 7, 23 \rangle$\\
+
+~\\
+{\flushleft
+~\\
+
+$PF \left( S \right)$ - set of all integers $x$ such that $x \notin S$ and $x + s \in S$\\
+}
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\color{red} 16}, {\bf 17}, {\color{red} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Ender}
+
+~\\
+
+M = $\lbrace 10, 5, 7, 23, 16 \rbrace$\\
+
+S = $\langle 5, 7, 16 \rangle$\\
+
+~\\
+{\flushleft
+Ender - A position $M$ where $t \left( M \right)$ is the only end\\
+
+$S$ is irreducible, i.e. pesudo-symmetric or symmetric\\
+
+$PF \left( S \right) = \lbrace F \left( S \right) / 2,  F \left( S \right) \rbrace$ or $\lbrace F \left( S \right) \rbrace$\\
+
+Enders are $\mathscr{N}$, allow for strategy stealing\\
+}
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\bf 16}, {\bf 17}, {\color{red} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Ender}
+
+~\\
+
+M = $\lbrace 10, 5, 7, 23, 16 \rbrace$\\
+
+S = $\langle 5, 7, 16 \rangle$\\
+
+~\\
+{\flushleft
+Ender - A position $M$ where $t \left( M \right)$ is the only end\\
+
+$S$ is irreducible, i.e. pesudo-symmetric or symmetric\\
+
+$PF \left( S \right) = \lbrace F \left( S \right) / 2,  F \left( S \right) \rbrace$ or $\lbrace F \left( S \right) \rbrace$\\
+
+Enders are $\mathscr{N}$, allow for strategy stealing\\
+}
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{blue} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\bf 16}, {\bf 17}, {\color{red} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Quiet Ender}
+
+~\\
+
+M = $\lbrace 10, 5, 7 \rbrace$\\
+
+S = $\langle 5, 7 \rangle$\\
+
+~\\
+{\flushleft
+Quiet Ender - Ender and every move eliminates $t \left( M \right)$ without multiples\\
+
+$PF \left( S \right) = \lbrace F \left( S \right) \rbrace$, $S$ is symmetric\\
+
+~\\
+}
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\color{gray} 16}, {\bf 17}, {\color{gray} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\color{red} 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Quiet Ender}
+
+~\\
+
+M = $\lbrace 10, 5, 7 \rbrace$\\
+
+S = $\langle 5, 7 \rangle$\\
+
+~\\
+{\flushleft
+Quiet Ender - Ender and every move eliminates $t \left( M \right)$ without multiples\\
+
+$PF \left( S \right) = \lbrace F \left( S \right) \rbrace$, $S$ is {\bf symmetric}\\
+
+$M$ displays Strong {\bf Antisymmetery} Principle\\
+}
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\color{gray} 16}, {\bf 17}, {\color{gray} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\color{red} 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Quiet Ender}
+
+~\\
+
+M = $\lbrace 10, 5, 7 \rbrace$\\
+
+S = $\langle 5, 7 \rangle$\\
+
+~\\
+{\flushleft
+Quiet Ender - Ender and every move can eliminate $t \left( M \right)$ without multiples\\
+
+$PF \left( S \right) = \lbrace F \left( S \right) \rbrace$, $S$ is symmetric\\
+
+$M$ displays Strong Antisymmetery Principle\\
+}
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf \color{blue} 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\color{blue} 16}, {\bf 17}, {\color{gray} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\color{red} 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{Strategies}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Strategies}
+
+Some strategies are known\\
+
+~\\
+
+Research in Numerical Semigroups provides
+
+other strategies for winning
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Known Strategies}
+
+~\\
+
+\begin{enumerate}
+
+\item If $p \geq 5$, then $\lbrace p \rbrace$ is $\mathscr{P}$
+
+\item If $p \geq 5$, then $\lbrace a p \rbrace$ loses to $p$
+
+\item If $M$ is nontrivial and $g \geq 5$ is prime, then $g$ wins
+
+\item If $a, b \in \mathbb{Z}^+$, then $\lbrace 2^a 3^b \rbrace$ is generally unknown
+
+\end{enumerate}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Enclosure}
+
+~\\
+
+M = $\lbrace 10, 5, 7, 23, 16, 9 \rbrace$\\
+
+S = $\langle 5, 7, 9, 16 \rangle$\\
+
+~\\
+{\flushleft
+$E \left( M \right)$ - Position obtained by imposing antisymmetry on $M$\\
+
+$E \left( M \right) = \lbrace 10, 5, 7, 23, 16, 9, 11 \rbrace$\\
+}
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\bf 9}, {\bf 10}, {\color{blue} 11}, {\bf 12}, {\color{red} 13}, {\bf 14}, {\bf 15}, {\bf 16}, {\bf 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Strategies}
+
+~\\
+
+\begin{enumerate}
+
+\item Completing $E \left( M \right)$ results in $\mathscr{N}$
+
+\item $F \left( S \right)$ is not always the winning move with an ender
+
+\end{enumerate}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Playing $F \left( S \right)$}
+
+~\\
+
+M = $\lbrace 8, 7, 4 \rbrace$\\
+
+S = $\langle 4, 7 \rangle$\\
+
+~\\
+{\flushleft
+Picking $F \left( S \right) = 17$ will result in loss\\
+
+~\\
+}
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\bf 4}, {\color{gray} 5}, {\color{gray} 6}, {\bf 7}, {\bf 8}, {\color{gray} 9}, {\color{gray} 10}, {\bf 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\bf 16}, {\color{blue} 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Playing $F \left( S \right)$}
+
+~\\
+
+M = $\lbrace 8, 7, 4, 17 \rbrace$\\
+
+S = $\langle 4, 7, 17 \rangle$\\
+
+~\\
+{\flushleft
+Picking $F \left( S \right) = 17$ will result in loss\\
+
+~\\
+}
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\bf 4}, {\color{gray} 5}, {\color{gray} 6}, {\bf 7}, {\bf 8}, {\color{gray} 9}, {\color{gray} 10}, {\bf 11}, {\bf 12}, {\color{blue} 13}, {\bf 14}, {\bf 15}, {\bf 16}, {\bf 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Playing $F \left( S \right)$}
+
+~\\
+
+M = $\lbrace 8, 7, 4, 17, 13 \rbrace$\\
+
+S = $\langle 4, 7, 13, 17 \rangle$\\
+
+~\\
+{\flushleft
+Picking $F \left( S \right) = 17$ will result in loss\\
+
+Player 2 picks $13$\\
+
+Player 1 cannot make a winning move\\
+}
+
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\bf 4}, {\color{gray} 5}, {\color{gray} 6}, {\bf 7}, {\bf 8}, {\color{gray} 9}, {\color{blue} 10}, {\bf 11}, {\bf 12}, {\bf 13}, {\bf 14}, {\bf 15}, {\bf 16}, {\bf 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Strategies}
+
+~\\
+
+\begin{enumerate}
+
+\item Completing $E \left( M \right)$ results in $\mathscr{N}$
+
+\item $F \left( S \right)$ is not always the winning move with an ender
+
+\item Let $m$ is the smallest move and $e$ is the number of moves
+
+\item If $S = \langle p, q \rangle$, then $S = \langle p, q, n q - p \rangle$ will be symmetric if $n \vert p$
+
+\end{enumerate}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Strategies}
+
+~\\
+
+\begin{enumerate}
+
+\item Completing $E \left( M \right)$ results in $\mathscr{N}$
+
+\item $F \left( S \right)$ is not always the winning move with an ender
+
+\item If $S = \langle p, q \rangle$, then $S = \langle p, q, n q - p \rangle$ will be symmetric if $n \vert p$
+
+\item Let $m$ is the smallest move and $e$ is the number of independent moves
+
+\begin{enumerate}
+
+\item If $2 \leq e \leq m - 1$, then there exists a irreducible numerical semigroup with these values of $m$ and $e$
+
+\item Always need to be aware of how close semigroup is to irreducible
+
+\end{enumerate}
+
+\end{enumerate}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{Future Questions}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Future Questions}
+
+Some of Richard Guy\rq{}s questions:
+
+\begin{enumerate}
+
+\item Is there an effective technique for computing the status of any $M$?
+
+\item Is there an effective technique for producing good replies?
+
+\item What is the status of position $\lbrace n \rbrace$ for $n$ of the form $2^a 3^b$?
+
+\item What is the status of $\lbrace 16 \rbrace$?
+
+\item What is the status of $\lbrace 18 \rbrace$?
+
+\item Is M a $\mathscr{P}$-position whenever 2$M$ is a $\mathscr{P}$-position?
+
+\item If the game is played \lq\lq{}between intelligent players\rq\rq{} is it always the case that the first person to make the game bounded is the loser?
+
+\end{enumerate}
+
+\end{center}
+\end{frame}
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\titlepage % Print the title page
+\end{frame}
+
+%------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+
+\end{document} 

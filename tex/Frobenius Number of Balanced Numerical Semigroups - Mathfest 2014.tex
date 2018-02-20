@@ -1,0 +1,1142 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> {
+
+\usetheme{CambridgeUS}
+
+\usecolortheme{dolphin}
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Balanced Numerical Semigroups]{The Frobenius Number of\\ Balanced Numerical Semigroups} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Jeremy L Thompson} % Your name
+\institute[USAFA] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{United States Air Force Academy \\ % Your institution for the title page
+\medskip
+\textit{jeremy.thompson@usafa.edu} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Overview}
+
+We will discuss the algebraic structure known as a numerical semigroup and definitions related to them.\\
+
+~\\
+
+We will investigate the Frobenius number of balanced numerical semigroups.
+
+\end{center}
+\end{frame}
+ 
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Background}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Coin Exchange Problem}
+
+Given $5$ and $7$ cent coins, what is the largest amount of change that cannot be created?\\
+
+~\\
+
+~\\
+
+\only<-1 | handout : 0>{\small {\color{gray} $0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 \cdots$}}
+
+\only<2- | handout : 0>{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\bf 5}, {\color{gray} 6}, {\bf 7}, {\color{gray} 8}, {\color{gray} 9}, {\bf 10}, {\color{gray} 11}, {\bf 12}, {\color{gray} 13}, {\bf 14}, {\bf 15}, {\color{gray} 16}, {\bf 17}, {\color{gray} 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf \color{red} 23}, {\bf 24}, {\bf 25}, \cdots$\\}
+
+~\\
+
+\uncover<3- | handout : 0>{$23 = 7 \cdot 5 - 7 - 5$}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Numerical Semigroups}
+
+A subset $S$ of $\mathbb{N}$ closed under addition, containing zero, and having a largest integer not in $S$\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\color{gray} 5}, {\color{gray} 6}, {\color{gray} 7}, {\bf 8}, {\bf 9}, {\color{gray} 10}, {\bf 11}, {\bf 12}, {\color{gray} 13}, {\color{gray} 14}, {\color{gray} 15}, {\bf 16}, {\bf 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, \cdots$}
+
+\end{center}
+\end{frame}
+ 
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Numerical Semigroups}
+
+Let $a _ 1, a _ 2, ... , a _ n \in \mathbb{N}$ such that $gcd \left( a _ 1, a _ 2, ... , a _ n \right) = 1$.\\
+
+~\\
+
+$S = \langle a _ 1, a _ 2, ... , a _ n \rangle = \{ a _ 1 t _ 1 + ... + a _ n t _ n \vert t _ i \in \mathbb{N} \}$\\
+$x \in S = \left(t_1, t_2, \cdots, t_n\right)$\\
+
+~\\
+
+\uncover<2- | handout : 0>{$a _ 1, a _ 2, ... , a _ n$ are called generators}
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\color{gray} 5}, {\color{gray} 6}, {\color{gray} 7}, {\bf 8}, {\bf 9}, {\color{gray} 10}, {\bf 11}, {\bf 12}, {\color{gray} 13}, {\color{gray} 14}, {\color{gray} 15}, {\bf 16}, {\bf 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, \cdots$}
+
+\end{center}
+\end{frame}
+ 
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Frobenius Number}
+
+\uncover<1- | handout : 0>{Frobenius Number: largest integer not in $S$\\~\\
+
+$S = \langle 8, 9, 11, 12 \rangle$\\}
+
+~\\
+
+$F(S) = 15$
+
+~\\
+
+~\\
+
+~\\
+
+~\\
+
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\color{gray} 5}, {\color{gray} 6}, {\color{gray} 7}, {\bf 8}, {\bf 9}, {\color{gray} 10}, {\bf 11}, {\bf 12}, {\color{gray} 13}, {\color{gray} 14}, {\bf \color{red} 15}, {\bf 16}, {\bf 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, \cdots$}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Known Results}
+
+"It would be nice to have a finite set of formulas which covers all possible cases for computing $F(S)$. Unfortunately, no such collection of formulas has ben found and probably does not exist at all."\\
+
+~\\
+
+- {\textit 'The exact solutions to the Frobenius problem with three variables'} by Mihaly Hujter and Bela Vizvri; J. Ramanujan Math. Soc. 2 $(1987)$
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Known Results}
+
+\small{
+
+\begin{itemize}
+
+\item $2$ Generators - $S = \langle a, b \rangle$ (Sylvester 1884)\\
+
+$F(S) = a \cdot b - a - b$
+
+\item $3+$ Generators - $S = \langle a_1, a_2, \cdots, a_n \rangle$\\
+
+$F(S) = ???$
+
+\uncover<2- | handout : 0>{
+
+\item Arithmetic sequence $S = \langle a, ma+d, ma + 2d, \cdots, ma + kd \rangle$ (Lewin 1975)\\
+
+$F(S) = m \cdot a \cdot \left( 1 + \lfloor \frac{a - 2}{k} \rfloor \right) + \left( d - 1 \right)\left(a - 1 \right) - 1$
+
+\item $S = <a_1, \dots , a_n>$ (not necessarily in ascending order) and let $d = gcd\{a_1, \dots , a_{n - 1}\}$ (Brauer and Schockley 1962)
+
+$F(S) = d \cdot F(\langle \frac{a_1}{d}, \dots , \frac{a_{n-1}}{d}, a_n \rangle) + \left( d - 1 \right) a_n$
+
+\item  $S = <a_1,a_2,a_3>$ and $a_i | (a_1+a_2+a_3)$ for some $i=2,3$ (Brauer and Schockley 1962)\\
+
+$F(S) = - a_1 + max_{i = 2, 3}\{a_i \cdot \lfloor \frac{a_1 \cdot a_{5 - i}}{a_2 + a_3} \rfloor\}$
+}
+
+\end{itemize}
+
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Apery Set Relative to $a_1$}
+
+Apery Set relative to $a_1$:\\
+
+~\\
+
+All elements in $S$ such that\\
+
+$x \in S$ and $x - a_1 \notin S$\\
+
+~\\
+
+\uncover<2- | handout : 0>{or: all elements in $S$ that can only be made without $a_1$\\
+
+~\\
+
+~\\
+
+Note: $Max(Ap(S)) - a_1 = F(S)$}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Apery Set Relative to $a_1$}
+
+Apery Set Relative to $a_1$ ($8$):\\
+
+$x \in S$ and $x - 8 \notin S$\\~\\
+
+$S = \langle 8, 9, 11, 12 \rangle$\\
+
+~\\
+
+\uncover<3- | handout : 0>{$Ap(S) = \{ 0, 9, 11, 12, 18, 21, 22, 23 \}$\\}
+
+~\\
+
+\uncover<4- | handout : 0>{Note: $Max(Ap(S)) - 8 = 23 - 8 = 15 = F(S)$}\\
+
+~\\
+
+{\small
+\only<1-1 | handout : 0>{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\color{gray} 5}, {\color{gray} 6}, {\color{gray} 7}, {\bf 8}, {\bf 9}, {\color{gray} 10}, {\bf 11}, {\bf 12}, {\color{gray} 13}, {\color{gray} 14}, {\color{gray} 15}, {\bf 16}, {\bf 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, \cdots$}}
+
+{\small
+\only<2-2 | handout : 0>{\small ${\color{red} |} {\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\color{gray} 5}, {\color{gray} 6}, {\color{gray} 7} {\color{red} |} {\bf 8}, {\bf 9}, {\color{gray} 10}, {\bf 11}, {\bf 12}, {\color{gray} 13}, {\color{gray} 14}, {\color{gray} 15} {\color{red} |} {\bf 16}, {\bf 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23} {\color{red} |} \cdots$}}
+
+{\small
+\only<3- | handout : 0>{\small $| {\bf \color{red} 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\color{gray} 5}, {\color{gray} 6}, {\color{gray} 7} | {\bf 8}, {\bf \color{red} 9}, {\color{gray} 10}, {\bf \color{red} 11}, {\bf \color{red} 12}, {\color{gray} 13}, {\color{gray} 14}, {\bf \color{blue} 15} | {\bf 16}, {\bf 17}, {\bf \color{red} 18}, {\bf 19}, {\bf 20}, {\bf \color{red} 21}, {\bf \color{red} 22}, {\bf \color{red} 23} | \cdots$}}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example}
+
+$S = \langle 6, 8, 13, 15 \rangle$\\
+
+~\\
+
+\uncover<3- | handout : 0>{$F(S) = 17$}
+
+~\\
+
+\uncover<4- | handout : 0>{$Ap(S) = \{ 0, 8, 13, 15, 16, 23 \}$\\}
+
+~\\
+
+\only<1-1 | handout : 0>{
+{\small ${\color{gray} 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\color{gray} 5}, {\bf 6}, {\color{gray} 7}, {\bf 8}, {\color{gray} 9}, {\color{gray} 10}, {\color{gray} 11}, {\color{gray} 12}, {\bf 13}, {\color{gray} 14}, {\bf 15}, {\color{gray} 16}, {\color{gray} 17}, {\color{gray} 18}, {\color{gray} 19}, {\color{gray} 20}, {\color{gray} 21}, {\color{gray} 22}, {\color{gray} 23}, \cdots$}}
+
+\only<2-2 | handout : 0>{
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\color{gray} 5}, {\bf 6}, {\color{gray} 7}, {\bf 8}, {\color{gray} 9}, {\color{gray} 10}, {\color{gray} 11}, {\bf 12}, {\bf 13}, {\bf 14}, {\bf 15}, {\bf 16}, {\color{gray} 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, \cdots$}}
+
+\only<3-3 | handout : 0>{
+{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\color{gray} 5}, {\bf 6}, {\color{gray} 7}, {\bf 8}, {\color{gray} 9}, {\color{gray} 10}, {\color{gray} 11}, {\bf 12}, {\bf 13}, {\bf 14}, {\bf 15}, {\bf 16}, {\bf \color{red} 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, \cdots$}}
+
+\only<4-4 | handout : 0>{
+{\small $| {\bf \color{red} 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\color{gray} 5} | {\bf 6}, {\color{gray} 7}, {\bf \color{red} 8}, {\color{gray} 9}, {\color{gray} 10}, {\color{gray} 11} | {\bf 12}, {\bf \color{red} 13}, {\bf 14}, {\bf \color{red} 15}, {\bf \color{red} 16}, {\bf \color{blue} 17} | {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf \color{red} 23} | \cdots$}}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{Balanced Numerical Semigroups}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Balanced Numerical Semigroups}
+
+$S = \langle p D, p D + n, q D - n, q D \rangle$\\
+
+~\\
+
+\uncover<2- | handout : 0>{$p, q, D, n \in \mathbb{N}$\\
+
+~\\
+
+$p < q$ and $gcd \left( p, q \right) = 1$\\
+
+$gcd \left( D, n \right) = 1$\\
+
+~\\
+
+$D \ge 1$ and $1 \le n < \frac{p + q}{2} D$}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example}
+
+$S = \langle p D, p D + n, q D - n, q D \rangle$\\~\\
+
+$p = 2, q = 3, D = 4,$ and $n = 1$\\
+
+~\\
+
+\uncover<2- | handout : 0>{$S = \langle p D, p D + n, q D - n, q D \rangle = \langle 8, 9, 11, 12 \rangle$}
+
+~\\
+
+\uncover<3- | handout : 0>{{\small ${\bf 0}, {\color{gray} 1}, {\color{gray} 2}, {\color{gray} 3}, {\color{gray} 4}, {\color{gray} 5}, {\color{gray} 6}, {\color{gray} 7}, {\bf 8}, {\bf 9}, {\color{gray} 10}, {\bf 11}, {\bf 12}, {\color{gray} 13}, {\color{gray} 14}, {\bf \color{red} 15}, {\bf 16}, {\bf 17}, {\bf 18}, {\bf 19}, {\bf 20}, {\bf 21}, {\bf 22}, {\bf 23}, \cdots$}\\
+
+~\\
+
+$F \left( S \right) = 15$}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{Frobenius Number of Balanced Numerical Semigroups}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Frobenius Number of Balanced Numerical Semigroups}
+
+We use relationships among the generators to find elements of $Ap(S)$\\
+
+~\\
+
+If $x \in S$ and $x = t_1 a_1 + t_2 a_2 + t_3 a_3 + t_4 a_4$\\
+
+~\\
+
+We say $x = \left(t_1, t_2, t_3, t_4\right)$\\
+
+~\\
+
+$t_1, t_2, t_3, t_4 \ge 0$
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Relations Among the Generators}
+
+$S = \langle 8, 9, 11, 12 \rangle$
+
+{\footnotesize
+\begin{center}
+\begin{tabular}{cl}
+($A$) & $\left(3, 0, 0, 0\right) = \left(0, 0, 0, 2\right)$\\
+ &\\
+($B$) & $\left(1, 0, 0, 1\right) = \left(0, 1, 1, 0\right)$\\
+ &\\
+($C_0$) & $\left(2, 0, 1, 0\right) = \left(0, 3, 0, 0\right)$\\
+ &\\
+($D_0$) & $\left(3, 1, 0, 0\right) = \left(0, 0, 3, 0\right)$\\
+ &\\
+($C_1$) & $\left(1, 0, 2, 0\right) = \left(0, 2, 0, 1\right)$\\
+ &\\
+($D_1$) & $\left(2, 2, 0, 0\right) = \left(0, 0, 2, 1\right)$\\
+\end{tabular}
+\end{center}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Relations Among the Generators}
+
+Note that
+
+{\footnotesize
+\begin{center}
+\begin{tabular}{cl}
+($A$) & $\left(3, 0, 0, 0\right)=\left(0, 0, 0, 2\right)$\\
+\end{tabular}
+\end{center}
+}
+
+~\\
+
+implies\\
+
+~\\
+
+if $x = \left(0, 0, 0, a\right) \in Ap(S)$ then $a < 2$
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Members of $Ap(S)$}
+
+$S = \langle 8, 9, 11, 12 \rangle$
+
+{\footnotesize
+\begin{center}
+\begin{tabular}{cl}
+($A$) & $\left(3, 0, 0, 0\right) = \left(0, 0, 0, 2\right)$\\
+ & if $x = \left(0, 0, 0, a\right) \in Ap(S)$ then $a < 2$\\
+ &\\
+($B$) & $\left(1, 0, 0, 1\right) = \left(0, 1, 1, 0\right)$\\
+ &\\
+($C_0$) & $\left(2, 0, 1, 0\right) = \left(0, 3, 0, 0\right)$\\
+ & if $x = \left(0, c_0, 0, 0\right) \in Ap(S)$ then $c_0 < 3$\\
+ &\\
+($D_0$) & $\left(3, 1, 0, 0\right) = \left(0, 0, 3, 0\right)$\\
+ & if $x = \left(0, 0, d_0, 0\right) \in Ap(S)$ then $d_0 < 3$\\
+ &\\
+($C_1$) & $\left(1, 0, 2, 0\right) = \left(0, 2, 0, 1\right)$\\
+ & if $x = \left(0, c_1, 0, 1\right) \in Ap(S)$ then $c_1 < 2$\\
+ &\\
+($D_1$) & $\left(2, 2, 0, 0\right) = \left(0, 0, 2, 1\right)$\\
+ & if $x = \left(0, 0, d_1, 1\right) \in Ap(S)$ then $d_1 < 2$\\
+\end{tabular}
+\end{center}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Members of $Ap(S)$}
+
+$S = \langle 8, 9, 11, 12 \rangle$, $F(S) = 15$
+
+\begin{center}
+\begin{tabular}{cl}
+($C_1$) & $\left(1, 0, 2, 0\right) = \left(0, 2, 0, 1\right)$\\
+ & if $x = \left(0, c_1, 0, 1\right) \in Ap(S)$ then $c_1 < 2$\\
+ &\\
+($D_1$) & $\left(2, 2, 0, 0\right) = \left(0, 0, 2, 1\right)$\\
+ & if $x = \left(0, 0, d_1, 1\right) \in Ap(S)$ then $d_1 < 2$\\
+\end{tabular}
+\end{center}
+
+~\\
+
+\uncover<2- | handout : 0>{$\left(0, 1, 0, 1\right) < \left(0, 0, 1, 1\right)$, so\\
+
+~\\
+
+$F(S) = \left(0, 0, 1, 1\right) - 8 = 11 + 12 - 8 = 15$}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Relations Among the Generators}
+
+{\scriptsize
+\begin{center}
+\begin{tabular}{cl}
+($A$) & $\left(q, 0, 0, 0\right)=\left(0, 0, 0, p\right)$\\
+ &\\
+($B$) & $\left(1, 0, 0, 1\right) = \left(0, 1, 1, 0\right)$\\
+ &\\
+($C_0$) & $\left(\frac{a p + a q + n}{p} + k, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a, 0\right)$\\
+ & $ = \left(0, \frac{q D}{p + q} + \frac{p k}{p + q} + a, 0, 0\right)$\\
+ &\\
+($D_0$) & $\left(q - \frac{a p + a q + n}{p} - k + p, \frac{q D}{p + q} + \frac{p k}{p + q} + a - p, 0, 0\right)$\\
+ & $ = \left(0, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + p, 0\right)$\\
+$\dots$ &\\
+ &\\
+($C_{p - 1}$) & $\left(\frac{a p + a q + n}{p} + k - p + 1, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + p - 1, 0\right)$\\
+ & $ = \left(0, \frac{q D}{p + q} + \frac{p k}{p + q} + a - p + 1, 0, p - 1\right)$\\
+ &\\
+($D_{p - 1}$) & $\left(q - \frac{a p + a q + n}{p} - k + 1, \frac{q D}{p + q} + \frac{p k}{p + q} + a - 1, 0, 0\right)$\\
+ & $ = \left(0, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + 1, p - 1\right)$\\
+\end{tabular}
+\end{center}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Frobenius Number}
+{\footnotesize
+Smaller $k$ Values:\\
+
+$k < p - \frac{a p + a q + n}{p} + \frac{n}{d}$\\
+
+~\\
+
+$Max(Ap(S)) = \left(0, 0, \delta _ {p - 1}, p - 1\right)$\\
+
+~\\
+
+$F(S) = \delta _ {p - 1} a_3 + \left( p - 1 \right) a_4 - a_1$\\
+$ = \left( p q - p - q \right) D + \left( q D - n \right) \left( \frac{p D - p k}{p + q} - a \right)$\\
+
+~\\
+
+~\\
+
+Larger $k$ Values:\\
+
+$k > p - \frac{a p + a q + n}{p} + \frac{n}{d}$\\
+
+~\\
+
+$Max(Ap(S)) = \left(0, \kappa _ {p - 1}, 0, p - 1\right)$\\
+
+~\\
+
+$F(S) = \kappa _ {p - 1} a_2 + \left( p - 1 \right) a_4 - a_1$\\
+$ = \left( p q - p - q \right) D + \left( p D + n \right) \left( \frac{q D + p k}{p + q} + a - p \right)$}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{Future Research}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Future Research}
+
+Future research:\\~\\
+Expand proof into smaller values of $D$\\~\\
+Develop new formula for very small values of $D$\\~\\
+Balanced numerical semigroups with $6, 8, 10$ or more generators\\
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{Questions}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Questions}
+
+\Huge{\centerline{Questions?}}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Thanks}
+
+Research Partners:\\
+
+~\\
+
+Dr Kurt Herzinger, USAFA\\
+
+~\\
+
+Dr Trae Holcomb, Houston Baptist University
+
+\end{center}
+\end{frame}
+
+\begin{frame}[noframenumbering]
+\titlepage % Print the title page
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{$k$ - Congruence Class of $D$ Modulo $p + q$}
+
+$k$ - the congruence class of $D$ modulo $p + q$\\
+
+~\\
+
+$k \in \{1 - \frac{a p + a q + n}{p}, 2 - \frac{a p + a q + n}{p}, \dots, p + q - \frac{a p + a q + n}{p}\}$\\
+where $a = - n q ^ {-1} \bmod p$\\
+
+~\\
+
+\uncover<2- | handout : 0>{Example: $p = 2, q = 9, D = 8,$ and $n = 1$\\
+
+~\\
+
+$k \in \{ -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5\}$\\
+$k = -3$}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{Frobenius Number of Balanced Numerical Semigroups}
+
+We use relationships among the generators to find elements of $Ap(S)$\\
+
+~\\
+
+\uncover<2- | handout : 0>{If $x \in S$ and $x = t_1 a_1 + t_2 a_2 + t_3 a_3 + t_4 a_4$\\
+
+~\\
+
+We say $x = \left(t_1, t_2, t_3, t_4\right)$\\
+
+~\\
+
+$t_1, t_2, t_3, t_4 \ge 0$}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{Relations Among the Generators}
+
+Note that
+
+{\footnotesize
+\begin{center}
+\begin{tabular}{cl}
+($A$) & $\left(q, 0, 0, 0\right)=\left(0, 0, 0, p\right)$\\
+\end{tabular}
+\end{center}
+}
+
+~\\
+
+implies\\
+
+~\\
+
+if $x = \left(0, 0, 0, a\right) \in Ap(S)$ then $a < p$
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{Relations Among the Generators}
+
+{\scriptsize
+\begin{center}
+\begin{tabular}{cl}
+($A$) & $\left(q, 0, 0, 0\right)=\left(0, 0, 0, p\right)$\\
+ &\\
+($B$) & $\left(1, 0, 0, 1\right) = \left(0, 1, 1, 0\right)$\\
+ &\\
+($C_0$) & $\left(\frac{a p + a q + n}{p} + k, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a, 0\right)$\\
+ & $ = \left(0, \frac{q D}{p + q} + \frac{p k}{p + q} + a, 0, 0\right)$\\
+ &\\
+($D_0$) & $\left(q - \frac{a p + a q + n}{p} - k + p, \frac{q D}{p + q} + \frac{p k}{p + q} + a - p, 0, 0\right)$\\
+ & $ = \left(0, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + p, 0\right)$\\
+$\dots$ &\\
+ &\\
+($C_{p - 1}$) & $\left(\frac{a p + a q + n}{p} + k - p + 1, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + p - 1, 0\right)$\\
+ & $ = \left(0, \frac{q D}{p + q} + \frac{p k}{p + q} + a - p + 1, 0, p - 1\right)$\\
+ &\\
+($D_{p - 1}$) & $\left(q - \frac{a p + a q + n}{p} - k + 1, \frac{q D}{p + q} + \frac{p k}{p + q} + a - 1, 0, 0\right)$\\
+ & $ = \left(0, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + 1, p - 1\right)$\\
+\end{tabular}
+\end{center}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{Relations Among the Generators}
+
+Note: These values only valid when\\
+
+{\footnotesize
+$k \in \{p - \frac{a p + a q + n}{p}, \dots, q - \frac{a p + a q + n}{p}\}$\\
+$D \ge k + \frac{a p + a q}{p}, - \frac{k p}{q} - \frac{a p + a q}{q} + \frac{p}{q} \left( p + q \right)$\\}
+
+~\\
+
+\uncover<2- | handout : 0>{Similar arguments needed for\\
+{\footnotesize
+$k \in \{1 - \frac{a p + a q + n}{p}, \dots, p - 1 - \frac{a p + a q + n}{p}\}$\\}
+and {\footnotesize
+$k \in \{q + 1 - \frac{a p + a q + n}{p}, \dots, p + q - \frac{a p + a q + n}{p}\}$\\}}
+
+~\\
+
+\uncover<3- | handout : 0>{But ... results are the same for all values of $k$}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{Apery Set Relative to $p D$}
+
+Relations give us elements of $Ap(S)$\\
+
+{\footnotesize
+\begin{center}
+\begin{tabular}{cl}
+($A$) & $\left(0, 0, 0, a\right)$, $a \in \{ 0, \cdots, p - 1 \}$\\
+ &\\
+($C_0$) & $\left(0, c_0, 0, 0\right)$, $c_0 \in \{ 1, \cdots, \frac{q D}{p + q} + \frac{p k}{p + q} + a - 1 \}$\\
+ &\\
+($D_0$) & $\left(0, 0, d_0, 0\right)$, $d_0 \in \{ 1, \cdots, \frac{p D}{p + q} - \frac{p k}{p + q} - a + p - 1 \}$\\
+ &\\
+$\dots$ &\\
+ &\\
+($C_{p - 1}$) & $\left(0, c_{p - 1}, 0, p - 1\right)$, $c_{p - 1} \in \{ 1, \cdots, \frac{q D}{p + q} + \frac{p k}{p + q} + a - p \} $\\
+ &\\
+($D_{p - 1}$) & $\left(0, 0, d_{p - 1}, p - 1\right)$, $d_{p - 1} \in \{ 1, \cdots, \frac{p D}{p + q} - \frac{p k}{p + q} - a \} $\\
+\end{tabular}
+\end{center}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{$Max(Ap(S))$}
+
+$Max(Ap(S))$ is one of \\
+
+{\footnotesize
+\begin{center}
+\begin{tabular}{cl}
+($A$) & $\left(0, 0, 0, \alpha\right)$, $\alpha = p - 1$\\
+ &\\
+($C_0$) & $\left(0, \kappa _ 0, 0, 0\right)$, $\kappa _ 0 = \frac{q D}{p + q} + \frac{p k}{p + q} + a - 1$\\
+ &\\
+($D_0$) & $\left(0, 0, \delta _ 0, 0\right)$, $\delta _ 0 = \frac{p D}{p + q} - \frac{p k}{p + q} - a + p - 1$\\
+ &\\
+$\dots$ &\\
+ &\\
+($C_{p - 1}$) & $\left(0, \kappa _ {p - 1}, 0, p - 1\right)$, $\kappa _ {p - 1} = \frac{q D}{p + q} + \frac{p k}{p + q} + a - p$\\
+ &\\
+($D_{p - 1}$) & $\left(0, 0, \delta _ {p - 1}, p - 1\right)$, $\delta _ {p - 1} = \frac{p D}{p + q} - \frac{p k}{p + q} - a$\\
+\end{tabular}
+\end{center}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{Frobenius Number}
+
+Smaller $k$ Values:\\
+{\footnotesize
+$k < p - \frac{a p + a q + n}{p} + \frac{n}{d}$\\
+
+~\\
+
+$Max(Ap(S)) = \left(0, 0, \delta _ {p - 1}, p - 1\right)$\\
+
+~\\
+
+$F(S) = \delta _ {p - 1} a_3 + \left( p - 1 \right) a_4 - a_1$\\
+$ = \left( p q - p - q \right) D + \left( q D - n \right) \left( \frac{p D - p k}{p + q} - a \right)$
+}\\
+
+~\\
+
+~\\
+
+Larger $k$ Values:\\
+{\footnotesize
+$k > p - \frac{a p + a q + n}{p} + \frac{n}{d}$\\
+
+~\\
+
+$Max(Ap(S)) = \left(0, \kappa _ {p - 1}, 0, p - 1\right)$\\
+
+~\\
+
+$F(S) = \kappa _ {p - 1} a_2 + \left( p - 1 \right) a_4 - a_1$\\
+$ = \left( p q - p - q \right) D + \left( p D + n \right) \left( \frac{q D + p k}{p + q} + a - p \right)$
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{$D$ Ranges}
+
+{\footnotesize
+Middle $k$ Values:\\
+$k \in \{p - \frac{a p + a q + n}{p}, \dots, q - \frac{a p + a q + n}{p}\}$\\
+$D \ge k + \frac{a p + a q}{p}, - \frac{k p}{q} - \frac{a p + a q}{q} + \frac{p}{q} \left( p + q \right)$\\
+
+~\\
+
+Smaller $k$ Values:\\
+$k \in \{1 - \frac{a p + a q + n}{p}, \dots, p - 1 - \frac{a p + a q + n}{p}\}$\\
+$D \ge k + \frac{a p + a q}{p}, - \frac{k p}{q} - \frac{a p + a q}{q} + \frac{i}{q} \left( p + q \right)$\\
+$i = k + \frac{a p + a q + n}{p}$\\
+
+~\\
+
+Larger $k$ Values:\\
+$k \in \{q + 1 - \frac{a p + a q + n}{p}, \dots, p + q - \frac{a p + a q + n}{p}\}$
+$D \ge k + \frac{a p + a q}{p} - \frac{p - i}{q} \left( p + q \right), - \frac{k p}{q} - \frac{a p + a q}{q} + \frac{p}{q} \left( p + q \right)$\\
+$i = q + p - k - \frac{a p + a q + n}{p}$\\
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{Problem - Smaller $k$}
+
+The relations $C_i, \cdots, C_{p - 1}$ have invalid $a_1$ values\\
+
+~\\
+
+$t_{C_i} = 0$ for $i = \frac{a p + a q + n}{p} + k$\
+
+~\\
+
+Can repair with relation ($B$)\\
+
+~\\
+
+$\left(1, 0, - 1, 1\right) = \left(0, 1, 0, 0\right)$
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{Relations Among the Generators - Smaller $k$}
+
+{\tiny
+\begin{center}
+\begin{tabular}{cl}
+($A$) & $\left(q, 0, 0, 0\right)=\left(0, 0, 0, p\right)$\\
+ &\\
+($C_0$) & $\left(\frac{a p + a q + n}{p} + k, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a , 0\right)$\\
+ & $ = \left(0, \frac{q D}{p + q} + \frac{p k}{p + q} + a, 0, 0\right)$\\
+ &\\
+($D_0$) & $\left(q - \frac{a p + a q + n}{p} - k + p, \frac{q D}{p + q} + \frac{p k}{p + q} + a - p, 0, 0\right)$\\
+ & $ = \left(0, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + p, 0\right)$\\
+$\cdots$ &\\
+ &\\
+($C_i ^ *$) & $\left(\frac{a p + a q + n}{p} + k - i + 1, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + i - 1, 1\right)$\\
+ & $ = \left(0, \frac{q D}{p + q} + \frac{p k}{p + q} + a - i + 1, 0, i\right)$\\
+$\cdots$ &\\
+ &\\
+($C_{p - 1} ^ *$) & $\left(\frac{a p + a q + n}{p} + k - i + 1, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + i - 1, p - i\right)$\\
+ & $ = \left(0, \frac{q D}{p + q} + \frac{p k}{p + q} + a - i + 1, 0, p - 1\right)$\\
+ &\\
+($D_{p - 1}$) & $\left(q - \frac{a p + a q + n}{p} - k + 1, \frac{q D}{p + q} + \frac{p k}{p + q} + a - 1, 0, 0\right)$\\
+ & $ = \left(0, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + 1, p - 1\right)$\\
+\end{tabular}
+\end{center}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{Apery Set - Smaller $k$}
+
+The Apery Set can be represented as before\\
+
+~\\
+
+But we have duplicates and invalid elements as below:
+
+{\footnotesize
+\begin{center}
+\begin{tabular}{cl}
+($C_{i}$) & $\left(0, 0, \frac{p D}{p + q} - \frac{k}{p + q} - a + i , j\right)$\\
+& $ = \left(0, \frac{q D}{p + q} + \frac{k}{p + q} + a - i, 0, i + j\right)$, $j \in \{ 0, \cdots, p - i - 1 \}$\\
+ &\\
+($C_{i + 1}$) & $\left(0, 0, \frac{p D}{p + q} - \frac{k}{p + q} - a + i + 1 , j\right)$\\
+& $ = \left(1, \frac{q D}{p + q} + \frac{k}{p + q} + a - i + 1, 0, i + 1 + j\right)$, $j \in \{ 0, \cdots, p - i - 2 \}$\\
+$\cdots$ &\\
+ &\\
+($C_{p - 1}$) & $\left(0, 0, \frac{p D}{p + q} - \frac{k}{p + q} - a + p - 1, j\right)$\\
+& $ = \left(p - i, \frac{q D}{p + q} + \frac{k}{p + q} + a - p + 1, 0, p - 1 + j\right)$, $j \in \{ 0 \}$\\
+\end{tabular}
+\end{center}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{Problem - Larger $k$}
+
+The relations $D_i, \cdots, D_{p - 1}$ have invalid $a_1$ values\\
+
+~\\
+
+$t_{D_i} = 0$ for $i = q - \frac{a p + a q + n}{p} - k + p$\\
+
+~\\
+
+Can repair with relation ($B$)\\
+
+~\\
+
+$\left(1, - 1, 0, 1\right) = \left(0, 0, 1, 0\right)$
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{Relations Among the Generators - Larger $k$}
+
+{\tiny
+\begin{center}
+\begin{tabular}{cl}
+($A$) & $\left(q, 0, 0, 0\right)=\left(0, 0, 0, p\right)$\\
+ &\\
+($C_0$) & $\left(\frac{a p + a q + n}{p} + k, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a, 0\right)$\\
+ & $ = \left(0, \frac{q D}{p + q} + \frac{p k}{p + q} + a, 0, 0\right)$\\
+ &\\
+($D_0$) & $\left(q - \frac{a p + a q + n}{p} - k + p, \frac{q D}{p + q} + \frac{p k}{p + q} + a - p, 0, 0\right)$\\
+ & $ = \left(0, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + p, 0\right)$\\
+$\cdots$ &\\
+ &\\
+($D_i ^ *$) & $\left(q - \frac{a p + a q + n}{p} - k + p - i + 1, \frac{q D}{p + q} + \frac{p k}{p + q} + a - p + i - 1, 0, 1\right)$\\
+ & $ = \left(0, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + p - i + 1, i\right)$\\
+$\cdots$ &\\
+ &\\
+($C_{p - 1}$) & $\left(\frac{a p + a q + n}{p} + k - p + 1, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + p - 1, 0\right)$\\
+ & $ = \left(0, \frac{q D}{p + q} + \frac{p k}{p + q} + a - p + 1, 0, p - 1\right)$\\
+ &\\
+($D_{p - 1} ^ *$) & $\left(q - \frac{a p + a q + n}{p} - k + p - i + 1, \frac{q D}{p + q} + \frac{p k}{p + q} + a - p + i - 1, 0, p - i\right)$\\
+ & $ = \left(0, 0, \frac{p D}{p + q} - \frac{p k}{p + q} - a + p - i + 1, p - 1\right)$\\
+\end{tabular}
+\end{center}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{Apery Set - Larger $k$}
+
+The Apery Set can be represented as before\\
+
+~\\
+
+But we have duplicates and invalid elements as below:
+
+{\footnotesize
+\begin{center}
+\begin{tabular}{cl}
+($D_i$) & $\left(0, \frac{q D}{p + q} + \frac{k}{p + q} + a - p + i, 0, j\right)$\\
+& $ = \left(0, 0, \frac{p D}{p + q} - \frac{k}{p + q} - a + p - i, i + j\right)$, $j \in \{ 0, \cdots, p - i - 1\}$\\
+ &\\
+($D_{i + 1}$) & $\left(0, \frac{q D}{p + q} + \frac{k}{p + q} + a - p + i + 1, 0, j\right)$\\
+& $ = \left(1, 0, \frac{p D}{p + q} - \frac{k}{p + q} - a + p - i - 1, i + 1 + j\right)$, $j \in \{ 0, \cdots, p - i - 2 \}$\\
+$\cdots$ &\\
+ &\\
+($D_{p - 1}$) & $\left(0, \frac{q D}{p + q} + \frac{k}{p + q} + a - 1, 0, j\right)$\\
+& $ = \left(p - i, 0, \frac{p D}{p + q} - \frac{k}{p + q} - a + 1, p - 1 + j\right)$, $j \in \{ 0 \}$\\
+\end{tabular}
+\end{center}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\begin{center}
+\frametitle{Frobenius Number}
+
+Smaller $k$ Values:\\
+{\footnotesize
+$k < p - \frac{a p + a q + n}{p} + \frac{n}{d}$\\
+
+~\\
+
+$Max(Ap(S)) = \left(0, 0, \delta _ {p - 1}, p - 1\right)$\\
+
+~\\
+
+$F(S) = \delta _ {p - 1} a_3 + \left( p - 1 \right) a_4 - a_1$\\
+$ = \left( p q - p - q \right) D + \left( q D - n \right) \left( \frac{p D - p k}{p + q} - a \right)$
+}\\
+
+~\\
+
+~\\
+
+Larger $k$ Values:\\
+{\footnotesize
+$k > p - \frac{a p + a q + n}{p} + \frac{n}{d}$\\
+
+~\\
+
+$Max(Ap(S)) = \left(0, \kappa _ {p - 1}, 0, p - 1\right)$\\
+
+~\\
+
+$F(S) = \kappa _ {p - 1} a_2 + \left( p - 1 \right) a_4 - a_1$\\
+$ = \left( p q - p - q \right) D + \left( p D + n \right) \left( \frac{q D + p k}{p + q} + a - p \right)$
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\titlepage % Print the title page
+\end{frame}
+
+%------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+
+\end{document} 
