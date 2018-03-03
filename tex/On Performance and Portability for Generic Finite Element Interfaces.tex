@@ -163,6 +163,19 @@ We have preliminary results comparing performance to native implementations in p
 \end{frame}
 
 %------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Assembled Matrix Cost!}
+
+\includegraphics[height=5.5cm]{libCEEDtensorVsAssembled}
+
+ Memory bandwidth and ﬂops per dof to apply a Jacobian from $Q_k$ discretization of a $b$-variable PDE system using an assembled matrix versus matrix-free exploiting the tensor product structure
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
 \section{libCEED}
 %------------------------------------------------
 
@@ -296,18 +309,17 @@ We have preliminary results comparing performance to native implementations in p
 \frametitle{Standalone Implementation}
 
 \begin{lstlisting}[language=C]
-// Solve system
-if (mpi_rank == 0) {
-	globalCGSolve(global_vector, f_vector,
-	boundary_vector);
-}
-else if (mpi_rank > 3) {
-	localOperatorApply(&ceed,
-	&processor_operator);
-}
+  // Create the mass operator.
+  CeedOperator oper;
+  CeedOperatorCreate(ceed, sol_restr, sol_basis,
+		apply_qfunc, NULL, NULL, &oper);
+
+...
+
+  // Apply the mass operator: 'u' -> 'v'.
+  CeedOperatorApply(oper, qdata, u, v, 
+		CEED_REQUEST_IMMEDIATE);
 \end{lstlisting}
-
-
 
 \end{center}
 \end{frame}
@@ -424,7 +436,7 @@ Number of Elements: $2^n$\\
 
 Shape Function Order: $7$\\
 
-Quadrature Order: $8$\\
+Quadrature Points: $9$\\
 
 Computer: CU Boulder Summit\\
 
@@ -434,7 +446,7 @@ Computer: CU Boulder Summit\\
 
 Nodes: 1\\
 
-CPUs: Intel Xeon Haswell\\
+CPUs: Intel Xeon ''Haswell''\\
 
 Processors: 32\\
 
