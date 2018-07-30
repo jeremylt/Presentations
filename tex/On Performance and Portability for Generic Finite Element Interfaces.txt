@@ -99,34 +99,6 @@ We have preliminary results comparing performance to native implementations in p
 
 %------------------------------------------------
 \section{Introduction}
-%------------------------------------------------
-
-\begin{frame}
-\begin{center}
-\frametitle{Weak Form and Finite Elements}
-
-\begin{itemize}
-
-\item Strong Form of PDE: $A_s u = f$\\
-
-~\\
-
-\item Weak Form of PDE: $\int_\Omega A u v = \int_\Omega f v$\\
-
-~\\
-
-\item $v$ are test functions defined on each element,\\
-
-\hspace{6mm} yields system of equations
-
-~\\
-
-\item Operator can be decomposed algebraically
-
-\end{itemize}
-
-\end{center}
-\end{frame}
 
 %------------------------------------------------
 
@@ -170,7 +142,7 @@ We have preliminary results comparing performance to native implementations in p
 
 \includegraphics[height=5.5cm]{libCEEDtensorVsAssembled}
 
- Memory bandwidth and ﬂops per dof to apply a Jacobian from $Q_k$ discretization of a $b$-variable PDE system using an assembled matrix versus matrix-free exploiting the tensor product structure
+ Memory bandwidth and ops per dof to apply a Jacobian from $Q_k$ discretization of a $b$-variable PDE system using an assembled matrix versus matrix-free exploiting the tensor product structure
 
 \end{center}
 \end{frame}
@@ -193,15 +165,23 @@ We have preliminary results comparing performance to native implementations in p
 
 ~\\
 
-\item Supports multiple types of computational devices\\
+\item Supports multiple types of computatinal devices\\
 
-\hspace{6mm} GPUs, CPUs, etc\\
+\begin{itemize}
 
-~\\
+\item CPU - Reference and vectorized, template for new backends
 
-\item Multiple extensible implementations\\
+\item OCCA (jit) - CPU, OpenMP, OpenCL, and CUDA
 
-\hspace{6mm} Reference on CPUs, OCCA on GPUs
+\item MAGMA
+
+\item One source code can call multiple CEEDs with different backends
+
+\end{itemize}
+
+\item v0.2 March and v0.3 (imminent)\\
+
+\item BSD-2 license
 
 \end{itemize}
 
@@ -270,6 +250,140 @@ We have preliminary results comparing performance to native implementations in p
 \end{center}
 \end{frame}
 
+%------------------------------------------------
+
+\begin{frame}[fragile]
+\begin{center}
+\frametitle{Basis}
+
+\begin{itemize}
+
+\item Tensor $H^1$ elements\\
+
+\item User provides $p, q, dim$ and chooses Gauss or Gauss-Lobatto dofs\\
+
+\item Alternatively, user provides $1D$ interp, grad matrices and quadrature weights and points\\
+
+\item More geometries, $H(div)$, $H(curl)$ coming\\
+
+\end{itemize}
+
+{\small
+\begin{lstlisting}[language=C]
+
+CeedBasisCreateTensorH1Lagrange(ceed, dim, ncomp,
+                P, Q, CEED_GAUSS, &basis);
+CeedBaisApply(basis, CEED_NOTRANSPOSE, CEED_EVAL_INTERP,
+                x, xq);
+
+\end{lstlisting}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+\begin{center}
+\frametitle{Restriction}
+
+\begin{itemize}
+
+\item Gather and scatter operations\\
+
+\item Support conforming and non-conforming meshes\\
+
+\item User provides index list, may be linear combination of dofs\\
+
+\item On node communication only\\
+
+\end{itemize}
+
+{\small
+\begin{lstlisting}[language=C]
+
+CeedElemRestrictionCreate(ceed, ne, 2, ne+1, 1,
+               CEED_MEM_HOST, CEED_USE_POINTER,
+               ind, &rstr);
+  CeedElemRestrictionApply(rstr, CEED_NOTRANSPOSE,
+               CEED_NOTRANSPOSE, u, ru,
+               CEED_REQUEST_IMMEDIATE);
+
+\end{lstlisting}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+\begin{center}
+\frametitle{Qfunction}
+
+\begin{itemize}
+
+\item Applies the physics at the quadrature points\\
+
+\item Multiple inputs and outputs\\
+
+\end{itemize}
+
+{\small
+\begin{lstlisting}[language=C]
+
+CeedQFunctionCreateInterior(ceed, 1, myfunc,
+              __FILE__ ":myfunc", &qf);
+CeedQFunctionAddInput(qf_setup, "_weight", 
+              1, CEED_EVAL_WEIGHT);
+CeedQFunctionAddInput(qf_setup, "x",
+              1, CEED_EVAL_GRAD);
+CeedQFunctionAddOutput(qf_setup, "rho",
+              1, CEED_EVAL_NONE);
+
+\end{lstlisting}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+\begin{center}
+\frametitle{Operator}
+
+\begin{itemize}
+
+\item Combines components to give local operator action\\
+
+\item Multiple inputs and outputs\\
+
+\item Composite operators coming\\
+
+\end{itemize}
+
+{\small
+\begin{lstlisting}[language=C]
+
+CeedOperatorCreate(ceed, qf_setup, NULL, NULL, &op_setup);
+
+CeedOperatorSetField(op_setup, "_weight",
+            CEED_RESTRICTION_IDENTITY, basis,
+            CEED_VECTOR_NONE);
+CeedOperatorSetField(op_setup, "x",
+            rstr, basis, CEED_VECTOR_ACTIVE);
+CeedOperatorSetField(op_setup, "rho",
+            CEED_RESTRICTION_IDENTITY,
+            CEED_BASIS_COLOCATED,
+            CEED_VECTOR_ACTIVE);
+
+\end{lstlisting}
+}
+
+\end{center}
+\end{frame}
 
 %------------------------------------------------
 
@@ -291,9 +405,13 @@ We have preliminary results comparing performance to native implementations in p
 
 ~\\
 
-\item libCEED optimization can benefit all operators\\
+\item Backend improvements benefit all applications\\
 
 \hspace{6mm} Tensor contraction, basis application, etc
+
+~\\
+
+\item Minimal dependencies\\
 
 \end{itemize}
 
@@ -311,13 +429,13 @@ We have preliminary results comparing performance to native implementations in p
 \begin{lstlisting}[language=C]
   // Create the mass operator.
   CeedOperator oper;
-  CeedOperatorCreate(ceed, sol_restr, sol_basis,
-		apply_qfunc, NULL, NULL, &oper);
+  CeedOperatorCreate(CEED, apply_qfunc,
+		NULL, NULL, &oper);
 
 ...
 
   // Apply the mass operator: 'u' -> 'v'.
-  CeedOperatorApply(oper, qdata, u, v, 
+  CeedOperatorApply(oper, u, v, 
 		CEED_REQUEST_IMMEDIATE);
 \end{lstlisting}
 
@@ -370,7 +488,7 @@ include 'TOTAL'
 ...
 call ceedvectorsetarray(vec_p1,ceed_mem_host,
 $ ceed_use_pointer, p1,err)
-call ceedoperatorapply(op_mass,vec_qdata,vec_p1,vec_ap1,
+call ceedoperatorapply(op_mass,vec_p1,vec_ap1,
 $ ceed_request_immediate,err)
 call ceedvectorgetarray(vec_ap1,ceed_mem_host,ap1,err)
 \end{lstlisting}
@@ -507,19 +625,21 @@ MPI: Intel/2017.0.098
 
 \begin{itemize}
 
-\item Optimize reference implementation, tensor contraction\\
+\item Improve optimized CPU backend, vectorize across elements\\
 
-~\\
+\item Improve GPU backends, reduce data movement\\
+
+\item Add additional geometries, tets, pyramids, and prisms\\
 
 \item Create library of user quadrature functions\\
 
-~\\
+\item Composite operators, for mixed meshes and multiphysics\\
 
-\item Create additional backends\\
-
-~\\
+\item Create pure CUDA backend\\
 
 \item Compare libCEED operators to native implementation in a\\ wider range of production software
+
+\item Contributors and friendly users welcome
 
 \end{itemize}
 
@@ -568,4 +688,4 @@ Grant: \hspace{11mm} Exascale Computing Project (17-SC-20-SC)\\
 
 %----------------------------------------------------------------------------------------
 
-\end{document} 
+\end{document}
