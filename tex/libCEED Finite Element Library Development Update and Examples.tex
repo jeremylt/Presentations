@@ -1,0 +1,901 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{multicol}
+
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{blue(ncs)}{rgb}{0.0, 0.45, 0.60}
+\definecolor{burgundy}{rgb}{0.5, 0.0, 0.13}
+
+\definecolor{cadet}{rgb}{0.33, 0.41, 0.47}
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
+
+\lstdefinestyle{C}{
+  language=C,
+  emptylines=1,
+  breaklines=true,
+  basicstyle=\ttfamily\color{black},
+  identifierstyle=\ttfamily,
+  keywordstyle=\color[rgb]{0.0, 0.0, 1.0},
+  stringstyle=\color[rgb]{1.0, 0.0, 0.0},
+  commentstyle=\color{gray}\slshape,
+}
+
+\lstdefinestyle{assembly}{
+  emptylines=1,
+  breaklines=true,
+  basicstyle=\ttfamily\color{black},
+  identifierstyle=\ttfamily,
+  keywordstyle=\color[rgb]{1.0, 0.0, 1.0},
+  stringstyle=\color[rgb]{1.0, 0.0, 0.0},
+  commentstyle=\color{gray}\slshape,
+  morekeywords={vmovapd, vfmadd231pd,vfnmadd213pd, vmulpd},
+}
+
+\lstdefinestyle{qfunc}{
+  language=C,
+  emptylines=1,
+  breaklines=true,
+  basicstyle=\ttfamily\color{black},
+  commentstyle=\color{gray}\slshape,
+  moredelim=**[is][\color{applegreen}]{@}{@},
+  moredelim=**[is][\color{blue(ncs)}]{!}{!},
+  moredelim=**[is][\color{green!40!black}]{z}{z},
+  moredelim=**[is][\color{blue(ncs)!80}]{#}{#},
+  moredelim=**[is][\color{blue(ncs)!80!black}]{'}{'},
+}
+
+\lstdefinestyle{oper}{
+  language=C,
+  emptylines=1,
+  breaklines=true,
+  basicstyle=\ttfamily\color{black},
+  moredelim=**[is][\color{applegreen}]{@}{@},
+  moredelim=**[is][\color{blue(ncs)}]{!}{!},
+  moredelim=**[is][\color{burgundy}]{#}{#},
+  moredelim=**[is][\color{red}]{'}{'},
+  moredelim=**[is][\bf]{z}{z},
+}
+
+\mode<presentation> {
+
+\usetheme{CambridgeUS}
+
+\usecolortheme{wolverine}
+
+\definecolor{gold}{HTML}{D4A017}
+\definecolor{darkgold}{HTML}{B7950B}
+
+\setbeamercolor{palette primary}{bg=cadet,fg=white}
+\setbeamercolor{palette secondary}{bg=airforceblue,fg=white}
+\setbeamercolor{palette tertiary}{bg=black,fg=white}
+\setbeamercolor{palette quaternary}{bg=cadet,fg=white}
+
+\setbeamercolor{frametitle}{bg=airforceblue,fg=white}
+
+\setbeamercolor{section number projected}{bg=black,fg=cadet}
+\setbeamercolor{item}{fg=black,bg=cadet}
+
+\setbeamertemplate{page number in head/foot}[framenumber]
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[libCEED Finite Element Library]{libCEED Finite Element Library\\Development Update and Examples} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author[Jeremy L Thompson]{Jeremy L Thompson\\Valeria Barra, Jed Brown} % Your name
+\institute[CU Boulder] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{University of Colorado Boulder \\ % Your institution for the title page
+\medskip
+\textit{jeremy.thompson@colorado.edu} % Your email address
+}
+\date{Sept 25, 2019} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{libCEED Team}
+
+{\flushleft
+
+Developers: \hspace{2mm} Jed Brown\textsuperscript{1}, Jeremy Thompson\textsuperscript{1} \\
+\hspace{23mm}  Thilina Rathnayake\textsuperscript{2}, Jean-Sylvain Camier\textsuperscript{3}, Tzanio Kolev\textsuperscript{3},\\
+\hspace{23mm} Veselin Dobrev\textsuperscript{3}, Valeria Barra\textsuperscript{1}, Yohann Doudouit\textsuperscript{3},\\
+\hspace{23mm} David Medina\textsuperscript{4}, Tim Warburton\textsuperscript{5}, \& Oana Marin\textsuperscript{6}\\
+
+~\\
+
+Grant: \hspace{11mm} Exascale Computing Project (17-SC-20-SC)\\
+
+~\\
+
+~\\
+
+\small{1: University of Colorado, Boulder\\
+2: University of Illinois, Urbana-Champaign\\
+3: Lawrence Livermore National Laboratory\\
+4: OCCA\\
+5: Virginia Polytechnic Institute and State University\\
+6: Argonne National Laboratory\\}}
+
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\frametitle{Overview}
+
+libCEED is an extensible library that provides a portable algebraic\\
+interface and optimized implementations of high-order operators\\
+
+~\\
+
+~\\
+
+We have optimized implementations for CPU and GPU\\
+
+~\\
+
+~\\
+
+We have new performance optimizations, development in our\\example suite, and research in preconditioning strategies
+
+\end{center}
+\end{frame}
+ 
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Introduction}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Center for Efficient Exascale Discretizations}
+
+\begin{flushleft}
+DoE exascale co-design center\\
+
+~\\
+\end{flushleft}
+
+\begin{itemize}
+
+\item Design discretization algorithms for exascale hardware that deliver significant performance gain over low order methods\\
+
+~\\
+
+\item Collaborate with hardware vendors and software projects for exascale hardware and software stack\\
+
+~\\
+
+\item Provide efficient and user-friendly unstructured PDE discretization component for exascale software ecosystem
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Tensor Product Elements}
+
+\setlength{\columnsep}{15mm}
+\begin{multicols}{2}
+
+\begin{flushright}
+\includegraphics[height=5cm]{libCEEDAssembledVsTensorApply}
+\end{flushright}
+
+\begin{flushleft}
+\includegraphics[height=5cm]{libCEEDAssembledVsTensorStorage}
+\end{flushleft}
+
+\end{multicols}
+
+Using an assembled matrix forgoes performance optimizations\\
+for hexahedral elements
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{libCEED}
+%------------------------------------------------
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{libCEED Design}
+
+libCEED design approach:\\
+
+~\\
+
+\begin{itemize}
+
+\item Avoid global matrix assembly\\
+
+~\\
+
+\item Optimize basis operations for all architectures\\
+
+~\\
+
+\item Single source user quadrature point functions\\
+
+~\\
+
+\item Easy to parallelize across hetrogeneous nodes
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{libCEED Backends}
+
+\includegraphics[height=6.5cm]{libCEEDBackends}
+
+libCEED provides multiple backend implementations\\
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{libCEED Operator Decomposition}
+
+\includegraphics[height=4.5cm]{libCEEDAPI}
+
+\small{
+
+\hspace{1.8cm}${\color{burgundy}A}_L = G^T {\color{blue(ncs)}B^T} {\color{applegreen}D} {\color{blue(ncs)}B} G$
+
+\begin{itemize}
+
+\item $G$ - CeedElemRestriction, local gather/scatter
+
+\item {\color{blue(ncs)}$B$} - CeedBasis, provides basis operations such as interp and grad
+
+\item {\color{applegreen}$D$} - CeedQFunction, representation of PDE at quadrature points
+
+\item ${\color{burgundy}A}_L$ - CeedOperator, aggregation of Ceed objects for local action of operator
+
+\end{itemize}
+
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Laplacian Example}
+
+Solving the 2D Poisson problem: $-\Delta u = f$\\
+
+Weak Form: $\int \nabla v \nabla u = \int v f$\\
+~\\
+
+\begin{itemize}
+
+\item General libCEED Operator
+
+      ${\color{burgundy}A}_L = G^T {\color{blue(ncs)}B^T} {\color{applegreen}D} {\color{blue(ncs)}B} G$\\
+~\\
+
+\item Laplacian Operator
+
+      ${\color{burgundy}A}_L = G^T {\color{blue(ncs)}B_{Grad2D}^T} {\color{applegreen}D} {\color{blue(ncs)}B_{Grad2D}} G$
+
+\end{itemize}
+
+where ${\color{applegreen}D}$ is block diagonal by quadrature point:\\
+      ${\color{applegreen}D_i} = \left( w_i \det{J_{geo}}\right) J_{geo}^{-1} J_{geo}^{-T}$ and
+      $J_{geo} = \left[ \begin{tabular}{cc}
+$\frac{\partial x}{\partial r}$ & $\frac{\partial x}{\partial s}$\\
+$\frac{\partial y}{\partial r}$ & $\frac{\partial y}{\partial s}$
+\end{tabular} \right]$\\
+      $x, y$ physical coords; $r, s$ reference coords
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Basis Optimization}
+
+Solving the 2D Poisson problem: $-\Delta u = f$\\
+
+Weak Form: $\int \nabla v \nabla u = \int v f$\\
+~\\
+
+\begin{itemize}
+
+\item General libCEED Operator
+
+      ${\color{burgundy}A}_L = G^T {\color{blue(ncs)}B^T} {\color{applegreen}D} {\color{blue(ncs)}B} G$\\
+~\\
+
+\item Laplacian Operator
+
+      ${\color{burgundy}A}_L = G^T {\color{blue(ncs)}B_{Grad2D}^T} {\color{applegreen}D} {\color{blue(ncs)}B_{Grad2D}} G$\\
+~\\
+
+\item Computationally Efficient Form
+
+      ${\color{burgundy}A}_L = G^T {\color{blue(ncs)} \left[ \begin{tabular}{cc}
+$B_{G}^T \otimes B_{I}^T$ & $B_{I}^T \otimes B_{G}^T$
+\end{tabular} \right]} {\color{applegreen}D} {\color{blue(ncs)} \left[ \begin{tabular}{c}
+$B_{G} \otimes B_{I}$\\
+$B_{I} \otimes B_{G}$
+\end{tabular} \right]} {\color{black} G}$\\
+      ${\color{blue(ncs)}B_I}$ - $1$D Interpolation\\
+      ${\color{blue(ncs)}B_G}$ - $1$D Gradient
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Basis Optimization}
+
+Solving the 2D Poisson problem: $-\Delta u = f$\\
+
+Weak Form: $\int \nabla v \nabla u = \int v f$\\
+~\\
+
+\begin{itemize}
+
+\item General libCEED Operator
+
+      ${\color{burgundy}A}_L = G^T {\color{blue(ncs)}B^T} {\color{applegreen}D} {\color{blue(ncs)}B} G$\\
+~\\
+
+\item Laplacian Operator
+
+      ${\color{burgundy}A}_L = G^T {\color{blue(ncs)}B_{Grad2D}^T} {\color{applegreen}D} {\color{blue(ncs)}B_{Grad2D}} G$\\
+~\\
+
+\item Computationally Efficient Form
+
+      ${\color{burgundy}A}_L = G^T {\color{blue(ncs)} \left( B_{I}^T \otimes B_{I}^T \right) \left[ \begin{tabular}{cc}
+$\hat{B}_{G}^T \otimes I_2$ & $I_2 \otimes \hat{B}_{G}^T$
+\end{tabular} \right]} {\color{applegreen}D} {\color{blue(ncs)} \left[ \begin{tabular}{c}
+$\hat{B}_{G} \otimes I_2$\\
+$I_2 \otimes \hat{B}_{G}$
+\end{tabular} \right] \left( B_{I} \otimes B_{I} \right)} {\color{black} G}$\\
+    where ${\color{blue(ncs)}\hat{B}_{G} = B_{G} B_{I}}$
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+\begin{center}
+\frametitle{Operator Definition}
+
+General libCEED Operator:\\
+
+${\color{red}v}_L = {\color{burgundy}A}_L {\color{red}u}_L$\\
+
+~\\
+
+${\color{burgundy}A}_L = {\bf G^T} {\color{blue(ncs)}B^T} {\color{applegreen}D} {\color{blue(ncs)}B} {\bf G}$\\
+
+~\\~\\
+
+Laplacian Operator Code:
+{\scriptsize
+\begin{lstlisting}[style=oper]
+CeedOperatorCreate(ceed, @qf_apply@, NULL, NULL, &#op_apply#);
+CeedOperatorSetField(#op_apply#, "du", zerestrictuz, CEED_TRANSPOSE,
+                     !basisu!, 'CEED_VECTOR_ACTIVE');
+CeedOperatorSetField(#op_apply#, "geo",erestrictqdi,CEED_NOTRANSPOSE,
+                     !CEED_BASIS_COLLOCATED!, geo);
+CeedOperatorSetField(#op_apply#, "dv", zerestrictuz, CEED_TRANSPOSE,
+                     !basisu!, 'CEED_VECTOR_ACTIVE');
+...
+CeedOperatorApply(#op_apply#, 'uloc', 'vloc', CEED_REQUEST_IMMEDIATE);
+\end{lstlisting}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+\begin{center}
+\frametitle{QFunction Definition}
+
+General libCEED QFunction:\\
+
+${\color{blue(ncs)!80!black}v_q} = {\color{applegreen}D} {\color{blue(ncs)!80}u_q}$\\
+
+~\\
+
+2D Laplacian QFunction:\\
+
+${\color{blue(ncs)}\left[} {\color{blue(ncs)!80!black} \begin{tabular}{c}
+$dv_0$\\ $dv_1$ \end{tabular}} {\color{blue(ncs)}\right]} = {\color{applegreen} \left[} {\color{green!40!black} \begin{tabular}{cc}
+$D_{00}$ & $D_{01}$\\
+$D_{01}$ & $ D_{11}$ \end{tabular}} {\color{applegreen}\right]} {\color{blue(ncs)}\left[} {\color{blue(ncs)!80} \begin{tabular}{c}
+$du_0$\\ $du_1$ \end{tabular} } {\color{blue(ncs)}\right]}$\\
+
+~\\
+
+~\\
+
+2D Laplacian QFunction Code:
+{\scriptsize
+\begin{lstlisting}[style=qfunc]
+CeedQFunctionCreateInterior(ceed, 1, Poisson2D,
+                            Poisson2D_loc, &@qf_apply@);
+CeedQFunctionAddInput(@qf_apply@, #"du"#, 2, !CEED_EVAL_GRAD!);
+CeedQFunctionAddInput(@qf_apply@, z"geo"z, 3, CEED_EVAL_NONE);
+CeedQFunctionAddOutput(@qf_apply@, '"dv"', 2, !CEED_EVAL_GRAD!);
+\end{lstlisting}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+\begin{center}
+\frametitle{QFunction Definition}
+
+\begin{itemize}
+
+\item Single Source QFunctions for all backends:\\
+
+~\\
+
+\item C/C++ code, compiled with main for CPU, JiT for GPU\\
+
+\end{itemize}
+
+~\\
+
+{\scriptsize
+\begin{lstlisting}[style=qfunc]
+int Poisson2D(void *ctx, const CeedInt Q,
+    const CeedScalar *const *in, CeedScalar *const *out) {
+  // Inputs and Outputs
+  const CeedScalar #*du# = in[0];
+  CeedScalar z*geoz = out[0], '*dv' = out[1];
+
+  // Quadrature Point Loop
+  CeedPragmaSIMD // For CPU vectorization
+  for (CeedInt i=0; i<Q; i++) {
+    'dv[i+Q*0]' = zgeo[i+Q*0]z*#du[i+Q*0]# + zgeo[i+Q*2]z*#du[i+Q*1]#;
+    'dv[i+Q*1]' = zgeo[i+Q*2]z*#du[i+Q*0]# + zgeo[i+Q*1]z*#du[i+Q*1]#;
+  } // End of Quadrature Point Loop
+
+  return 0;
+}
+\end{lstlisting}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{libCEED Performance}
+
+Benchmark performance across multiple implementations\\
+
+~\\
+
+\begin{multicols}{2}
+
+\begin{flushleft}
+Benchmark Problem 1/2:
+\end{flushleft}
+
+\begin{itemize}
+
+\item ${\color{burgundy}M} u = f$
+
+\item $L^2$ projection problem
+
+\end{itemize}
+
+\begin{flushleft}
+Benchmark Problem 3/4:
+\end{flushleft}
+
+\begin{itemize}
+
+\item ${\color{burgundy}K} u = f$
+
+\item Poisson problem
+
+\end{itemize}
+
+\end{multicols}
+
+\begin{flushleft}
+
+~\\
+
+3D scalar problem (BP 1/3) or 3D vector problem (BP 2/4)\\
+
+~\\
+
+Unpreconditioned CG, maximum of 20 iterations\\
+
+\end{flushleft}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{GPU Performance}
+
+\includegraphics[height=5.2cm]{libCEEDCudaGenCompare}\\
+
+\begin{itemize}
+
+\item Substantial performance increase with Single Source QF + JiT
+
+\item +/- 10\% performance of tuned kernels in libParanumal
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{CPU Performance}
+
+\setlength{\columnsep}{1mm}
+\begin{multicols}{2}
+
+\begin{flushleft}
+\includegraphics[width=5.9cm]{plot_libCEED_PETScBP3_cpuselfxsmmserial_N004_pn24.pdf}
+\end{flushleft}
+
+\begin{flushright}
+\includegraphics[width=5.9cm]{plot_libCEED_PETScBP3_cpuselfxsmmblocked_N004_pn24.pdf}
+\end{flushright}
+
+\end{multicols}
+
+\vspace{-0.5cm}
+
+{\scriptsize \textit{
+RMACC Summit, 4 x Intel Xeon E5-2680 v3
+}}
+
+\begin{itemize}
+
+\item External vectorization important at lower order
+
+\item Order we see performance 'switch' problem dependent
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{Example Suite}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Navier-Stokes Example}
+
+\begin{itemize}
+
+\item State Variables:
+
+\begin{itemize}
+
+\item $\rho$ - Mass density
+
+\item $U$ - Momentum density
+
+\item $E$ - Total Energy density\\
+
+\end{itemize}
+
+~\\
+
+\item 3D Compressible Navier-Stokes:
+
+\hspace{32mm} $\frac{\partial \rho}{\partial t} + div \left( U \right) = 0$\\
+$\frac{\partial U}{\partial t} + div \left( \rho \left( u \times u \right) + P I_3 \right) + \rho g \hat{k} = div \left( F_u \right)$\\
+\hspace{19mm} $\frac{\partial E}{\partial t} + div \left( \left(E + P \right) u \right) = div \left( F_e \right)$\\
+
+~\\
+
+\item Viscous and Thermal Stresses:
+
+$F_u = \mu \left( \nabla u + \left( \nabla u \right)^T + \lambda div \left( u \right) I_3 \right)$\\
+$F_e = u F_u + k \nabla T$
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+%------------------------------------------------
+
+\begin{frame}[fragile]
+\begin{center}
+\frametitle{QFunction Assembly}
+
+User QFunction:
+{\tiny
+\begin{lstlisting}[style=C]
+// ---- Fuvisc
+const CeedInt Fuviscidx[3][3] = {{0, 1, 2}, {1, 3, 4}, {2, 4, 5}};
+for (CeedInt j=0; j<3; j++)
+  for (CeedInt k=0; k<3; k++)
+    dv[k][j+1][i] -= wJ*(Fu[Fuviscidx[j][0]]*dXdxdXdxT[k][0] +
+                         Fu[Fuviscidx[j][1]]*dXdxdXdxT[k][1] +
+                         Fu[Fuviscidx[j][2]]*dXdxdXdxT[k][2]);
+\end{lstlisting}
+}
+
+~\\
+
+Assembly:
+{\tiny
+\begin{lstlisting}[style=assembly]
+    dv[k][j+1][i] -= wJ*(Fu[Fuviscidx[j][0]]*dXdxdXdxT[k][0] +
+b08d:	c5 7d 28 d0          	vmovapd %ymm0,%ymm10
+                         Fu[Fuviscidx[j][1]]*dXdxdXdxT[k][1] +
+b091:	c4 42 c5 b8 d3       	vfmadd231pd %ymm11,%ymm7,%ymm10
+b096:	c5 fd 28 84 24 c8 04 	vmovapd 0x4c8(%rsp),%ymm0
+b09d:	00 00 
+    dv[k][j+1][i] -= wJ*(Fu[Fuviscidx[j][0]]*dXdxdXdxT[k][0] +
+b09f:	c4 62 f5 ac 14 07    	vfnmadd213pd (%rdi,%rax,1),%ymm1,%ymm10
+b0a5:	c5 7d 11 14 07       	vmovupd %ymm10,(%rdi,%rax,1)
+                         Fu[Fuviscidx[j][1]]*dXdxdXdxT[k][1] +
+b0aa:	c5 7d 59 94 24 68 04 	vmulpd 0x468(%rsp),%ymm0,%ymm10
+b0b1:	00 00
+...
+\end{lstlisting}
+}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{Current Efforts}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example Suite}
+
+{\flushleft
+Ongoing development in example suite\\
+}
+
+~\\
+
+\begin{itemize}
+
+\item PHASTA investigating porting to libCEED\\
+
+~\\
+
+\begin{itemize}
+
+\item SUPG stabilization\\
+
+~\\
+
+\item Primitive variable formulation\\
+
+~\\
+
+\item Implicit time integrator\\
+
+\end{itemize}
+
+~\\
+
+\item Initial development of shallow water equations example
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Preconditioning}
+
+{\flushleft
+Iterative solvers require preconditioning\\
+
+~\\
+
+Especially with high-order finite element operators\\
+}
+
+~\\
+
+\begin{itemize}
+
+\item Operator Diagonal\\
+- Diagonally dominant operators\\
+
+~\\
+
+\item P-Multigrid\\
+- Elliptic operators\\
+
+~\\
+
+\item BDDC with FDM\\
+- In development
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{Future Work}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Future Work}
+
+\begin{itemize}
+
+\item Further performance enhancements (GPU and CPU)\\
+
+~\\
+
+\item Improved mixed mesh and operator composition support\\
+
+~\\
+
+\item Expanded non-linear and multi-physics examples\\
+
+~\\
+
+\item Preconditioning based on libCEED operator decomposition\\
+
+~\\
+
+\item Algorithmic differentiation of user quadrature functions\\
+
+~\\
+
+\item We invite contributors and friendly users
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{Questions}
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Questions?}
+
+{\flushleft
+
+Advisors : \hspace{5mm} Jed Brown\textsuperscript{1} \& Daniel Appel\"{o}\textsuperscript{1}\\
+
+~\\
+
+Collaborators: Valeria Barra\textsuperscript{1}, Oana Marin\textsuperscript{2}, Tzanio Kolev\textsuperscript{3},\\
+\hspace{23mm} Jean-Sylvain Camier\textsuperscript{3}, Veselin Dobrev\textsuperscript{3}, Yohann Doudouit\textsuperscript{3},\\
+\hspace{23mm} Tim Warburton\textsuperscript{4}, David Medina\textsuperscript{5}, \& Thilina Rathnayake\textsuperscript{6}\\
+
+~\\
+
+Grant: \hspace{11mm} Exascale Computing Project (17-SC-20-SC)\\
+
+~\\
+
+~\\
+
+\small{1: University of Colorado, Boulder\\
+2: Argonne National Laboratory\\
+3: Lawrence Livermore National Laboratory\\
+4: Virginia Polytechnic Institute and State University\\
+5: OCCA\\
+6: University of Illinois, Urbana-Champaign\\}}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\titlepage % Print the title page
+\end{frame}
+
+%------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
+
