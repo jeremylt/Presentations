@@ -373,7 +373,7 @@ $f'_0 = 0$, $f'_1 = 2$, \hspace{0.7mm} $f'_n = 2 x f'_{n - 1} + 2 f_{n - 1} - f'
 
 ~\\
 
-\item $\mathcal{O} \left( q^3 \right)$ FLOPs at $\mathcal{O} \left( q^3 \right)$ points\\
+\item $\mathcal{O} \left( q^3 \right)$ FLOPs at $\mathcal{O} \left( \hat{q}^3 \right)$ points (often $q \approx \hat{q}$)\\
 
 \end{itemize}
 
@@ -510,7 +510,7 @@ Using 4x AMD Instinct\texttrademark MI300A Accelerated Processing Units (APUs)
 
 ~\\
 
-More FLOPs leads to lower efficiency
+More FLOPs to do leads to lower efficiency
 
 \end{center}
 \end{frame}
@@ -549,13 +549,13 @@ With derivatives, at-points closer to non-tensor
 
 \begin{frame}
 \begin{center}
-\frametitle{BP3}
+\frametitle{BP4}
 
 \includegraphics[height=6.5cm]{MPM_BP4.png}\\
 
 ~\\
 
-Derivatives and more components worst for at-points
+Closest benchmark to representative workload
 
 \end{center}
 \end{frame}
@@ -570,7 +570,7 @@ Derivatives and more components worst for at-points
 
 ~\\
 
-Still see cost with heavier QFunctions
+Basis cost less important with heavier QFunctions
 
 \end{center}
 \end{frame}
