@@ -445,7 +445,7 @@ Multiple boundary conditions are supported in Ratel\\
 
 \item Pressure\\
 
-\item Rigid contact - Nitsche, penalty (Coulomb or Threlfall friction)\\
+\item Rigid contact - Nitsche or penalty, with Coulomb or Threlfall friction\\
 
 \end{itemize}
 
@@ -536,6 +536,24 @@ $ bin/ratel-quasistatic -options_file examples/ymls/ex02-quasistatic-elasticity-
 
 Quasistatic simulation of compressive shear for generic brittle material\\
 
+
+(Fabio Di Gioacchino, PSAAP postdoc)
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+\begin{center}
+\frametitle{Example - Hencky Viscoelasticity Damage}
+
+\includegraphics[height=5cm]{HenckyViscoDamage.png}
+
+Quasistatic simulation of IDOX grains in IDOX/Estane matrix\\
+with damage due to unconfined compression\\
+
+~\\
 
 (Fabio Di Gioacchino, PSAAP postdoc)
 
@@ -1309,13 +1327,13 @@ FEM, iMPM simulations of dense sinker in "foam" validation problem\\
 \begin{center}
 \frametitle{Example - Press Simulation}
 
-\includegraphics[height=5.7cm]{iMPM0.png}
-\includegraphics[height=5.7cm]{iMPM1.png}
-\includegraphics[height=5.7cm]{iMPM2.png}
+\includegraphics[height=5cm]{iMPMCloseup.png}
+\hspace*{1cm}
+\includegraphics[height=5cm]{iMPMCompress.png}
 
 ~\\
 
-Compression of mock HE grains (black) and binder (red) mixture\\
+Compression of mock HE grains (gold) and binder (pink) mixture\\
 
 (Reset background mesh to computational region on each timestep)
 
