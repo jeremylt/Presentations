@@ -62,8 +62,6 @@
 
 [2015-04-09 Projects for Engineering Math Students](https://jeremylt.github.io/Presentations/20150409%20-%20Projects%20for%20Engr%20Math%20Students.pdf)
 
-[2014-08-28 An Empirical Evaluation of Denoising Techniques for Streaming Data](https://jeremylt.github.io/Presentations/20140828%20-%20An%20Empirical%20Evaluation%20of%20Denoising%20Techniques%20for%20Streaming%20Data.pdf)
-
 [2014-08-09 Frobenius Number of Balanced Numerical Semigroups](https://jeremylt.github.io/Presentations/20140809%20-%20Frobenius%20Number%20of%20Balanced%20Numerical%20Semigroups.pdf)
 
 [2014-07-28 Incremental Denoising](https://jeremylt.github.io/Presentations/20140728%20-%20Incremental%20Denoising.pdf)
