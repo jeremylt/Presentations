@@ -1,3 +1,10 @@
+## CV and Resume
+
+[CV](https://jeremylt.github.io/Presentations/00%20-%20Thompson%20Jeremy%20Luke%20CV.pdf)
+[Resume](https://jeremylt.github.io/Presentations/01%20-%20Thompson%20Jeremy%20Luke%20Resume.pdf)
+
+## Presentations
+
 [2025-09-11 Performant MPM Basis Operations for GPU Architectures](https://jeremylt.github.io/Presentations/20250911%20-%20Performant%20MPM%20Basis%20Operations%20for%20GPU%20Architectures.pdf)
 [2025-08-06 Ratel: Solid Mechanics for the Exascale Era](https://jeremylt.github.io/Presentations/20250806%20-%20Ratel%20Solid%20Mechanics%20for%20the%20Exascale%20Era.pdf)
 [2025-07-15 Matrix-Free MPM on High-Order Meshes with Ratel and libCEED](https://jeremylt.github.io/Presentations/20250715%20-%20Matrix-Free%20MPM%20on%20High-Order%20Meshes%20with%20Ratel%20and%20libCEED.pdf)
