@@ -1,43 +1,78 @@
 ## CV and Resume
 
 [CV](https://jeremylt.github.io/Presentations/00%20-%20Thompson%20Jeremy%20Luke%20CV.pdf)
+
 [Resume](https://jeremylt.github.io/Presentations/01%20-%20Thompson%20Jeremy%20Luke%20Resume.pdf)
 
 ## Presentations
 
 [2025-09-11 Performant MPM Basis Operations for GPU Architectures](https://jeremylt.github.io/Presentations/20250911%20-%20Performant%20MPM%20Basis%20Operations%20for%20GPU%20Architectures.pdf)
+
 [2025-08-06 Ratel: Solid Mechanics for the Exascale Era](https://jeremylt.github.io/Presentations/20250806%20-%20Ratel%20Solid%20Mechanics%20for%20the%20Exascale%20Era.pdf)
+
 [2025-07-15 Matrix-Free MPM on High-Order Meshes with Ratel and libCEED](https://jeremylt.github.io/Presentations/20250715%20-%20Matrix-Free%20MPM%20on%20High-Order%20Meshes%20with%20Ratel%20and%20libCEED.pdf)
+
 [2025-05-20 Ratel: Feature Overview](https://jeremylt.github.io/Presentations/20250520%20-%20Ratel%20Feature%20Overview.pdf)
+
 [2025-05-01 Ratel: New Foundations of Computational Mechanics for the Exascale Era](https://jeremylt.github.io/Presentations/20250501%20-%20Ratel%20New%20Foundations%20of%20Computational%20Mechanics%20for%20the%20Exascale%20Era.pdf)
+
 [2025-02-13 University of Oregon AMD MI300A Workshop](https://jeremylt.github.io/Presentations/20250213%20-%20UO%20AMD%20Workshop.pdf)
+
 [2025-02-11 libCEED GPU Strategy](https://jeremylt.github.io/Presentations/20250211%20-%20libCEED%20GPU%20Strategy.pdf)
+
 [2024-10-04 Ratel Implicit MPM](https://jeremylt.github.io/Presentations/20241004%20-%20Ratel%20Implicit%20MPM.pdf)
+
 [2024-05-24 PETSc with libCEED Performance Portable Matrix-Free Operators](https://jeremylt.github.io/Presentations/20240524%20-%20PETSc%20with%20libCEED%20Performance%20Portable%20Matrix-Free%20Operators.pdf)
-[2023-08-15 Ratel: High Order Solid Mechanics with libCEED and PETSc](https://jeremylt.github.io/Presentations/20230815%20-%20Ratel:%20High%20Order%20Solid%20Mechanics%20with%20libCEED%20and%20PETSc.pdf)
+
+[2023-08-15 Ratel: High Order Solid Mechanics with libCEED and PETSc](https://jeremylt.github.io/Presentations/20230815%20-%20Ratel
+:%20High%20Order%20Solid%20Mechanics%20with%20libCEED%20and%20PETSc.pdf)
 [2022-09-27 Ratel Development Practices](https://jeremylt.github.io/Presentations/20220927%20-%20Ratel%20Development%20Practices.pdf)
+
 [2022-04-04 BDDC Preconditioned P-Multigrid for High-Order Finite Elements](https://jeremylt.github.io/Presentations/20220404%20-%20BDDC%20Preconditioned%20P-Multigrid%20for%20High-Order%20Finite%20Elements.pdf)
+
 [2022-02-23 Productive Performance Portability Rust with PETSc and libCEED](https://jeremylt.github.io/Presentations/20220223%20-%20Productive%20Performance%20Portability%20Rust%20with%20PETSc%20and%20libCEED.pdf)
+
 [2021-07-08 LFA of Domain Decomposition and Multigrid for High-Order FEM](https://jeremylt.github.io/Presentations/20210708%20-%20LFA%20of%20Domain%20Decomposition%20and%20Multigrid%20for%20High-Order%20FEM%20at%20dissertation%20defense.pdf)
-[2021-04-02 Local Fourier Analysis of P-Multigrid with LFAToolkit.jl](https://jeremylt.github.io/Presentations/20210402%20-%20Local%20Fourier%20Analysis%20of%20P-Multigrid%20with LFAToolkitjl.ipynb)
+
+[2021-04-02 Local Fourier Analysis of P-Multigrid with LFAToolkit.jl](https://jeremylt.github.io/Presentations/20210402%20-%20Local%20Fourier%20Analysis%20of%20P-Multigrid%20with%20LFAToolkitjl.ipynb)
+
 [2021-03-01 Preconditioning High-Order Finite Elements with P-Multigrid and BDDC](https://jeremylt.github.io/Presentations/20210301%20-%20Preconditioning%20High-Order%20Finite%20Elements%20with%20P-Multigrid%20and%20BDDC.ipynb)
+
 [2020-08-12 libCEED Tutorial at CEED 4th Annual Meeting](https://jeremylt.github.io/Presentations/20200812%20-%20libCEED%20Tutorial%20at%20CEED%204AM.pdf)
+
 [2020-07-31 libCEED: A Case Study in Hidden Benefits of the Bridge Pattern](https://jeremylt.github.io/Presentations/20200731%20-%20libCEED:%20A%20Case%20Study%20in%20Hidden%20Benefits%20of%20the%20Bridge%20Pattern.pdf)
+
 [2020-01-15 Preconditioning with BDDC and FDM for High-Order Finite Elements with libCEED](https://jeremylt.github.io/Presentations/20200115%20-%20Preconditioning%20with%20BDDC%20and%20FDM%20for%20High%20Order%20Finite%20Elements%20with%20libCEED.pdf)
+
 [2019-11-19 Scientific Computing 2019 libCEED Poster](https://jeremylt.github.io/Presentations/20191119%20-%20SC19%20libCEED%20Poster.pdf)
+
 [2019-09-27 Matrix-Free Multigrid with libCEED: Challenges and Applications](https://jeremylt.github.io/Presentations/20190927%20-%20Matrix%20Free%20Multigrid%20with%20libCEED%20Challenges%20and%20Applications.pdf)
+
 [2019-09-25 libCEED: Finite Element Library Development Update and Examples](https://jeremylt.github.io/Presentations/20190925%20-%20libCEED%20Finite%20Element%20Library%20Development%20Update%20and%20Examples.pdf)
+
 [2019-06-28 Matrix-Free P-Multigrid with libCEED and PETSc](https://jeremylt.github.io/Presentations/20190628%20-%20Matrix%20Free%20P-Multigrid%20with%20libCEED%20and%20PETSc.pdf)
+
 [2019-02-27 Optimizing Performance for Portable Generic Finite Element Interfaces](https://jeremylt.github.io/Presentations/20190227%20-%20Optimizing%20Performance%20for%20Portable%20Generic%20Finite%20Element%20Interface.pdf)
+
 [2018-09-18 Performance and Portability with the libCEED Finite Element Library](https://jeremylt.github.io/Presentations/20180918%20-%20Performance%20and%20Portability%20with%20the%20libCEED%20Finite%20Element%20Library.pdf)
+
 [2018-07-11 On Performance and Portability for Generic Finite Element Interfaces](https://jeremylt.github.io/Presentations/20180711%20-%20On%20Performance%20and%20Portability%20for%20Generic%20Finite%20Element%20Interfaces.pdf)
+
 [2015-08-07 Sylver Coinage - An Algebraist's Investigation](https://jeremylt.github.io/Presentations/20150807%20-%20Sylver%20Coinage%20-%20An%20Algebraist's%20Investigation.pdf)
+
 [2015-04-09 Projects for Engineering Math Students](https://jeremylt.github.io/Presentations/20150409%20-%20Projects%20for%20Engr%20Math%20Students.pdf)
+
 [2014-08-28 An Empirical Evaluation of Denoising Techniques for Streaming Data](https://jeremylt.github.io/Presentations/20140828%20-%20An%20Empirical%20Evaluation%20of%20Denoising%20Techniques%20for%20Streaming%20Data.pdf)
+
 [2014-08-09 Frobenius Number of Balanced Numerical Semigroups](https://jeremylt.github.io/Presentations/20140809%20-%20Frobenius%20Number%20of%20Balanced%20Numerical%20Semigroups.pdf)
+
 [2014-07-28 Incremental Denoising](https://jeremylt.github.io/Presentations/20140728%20-%20Incremental%20Denoising.pdf)
+
 [2012-01-30 Mixed Data Type Exponential Smoothing for Reliability Prediction](https://jeremylt.github.io/Presentations/20120130%20-%20Mixed%20Data%20Type%20Exponential%20Smoothing%20For%20Reliability%20Prediction%20-%20OA%20Forum%20Presentation.pdf)
+
 [2011-12-01 Mixed Data Type Exponential Smoothing for Reliability Prediction](https://jeremylt.github.io/Presentations/20111201%20-%20Mixed%20Data%20Type%20Exponential%20Smoothing%20For%20Reliability%20Prediction%20-%20UW%20Presentation.pdf)
+
 [2009-05-27 Numerical Semigroups and Wilf's Conjecture](https://jeremylt.github.io/Presentations/20090527%20-%20Numerical%20Semigroups%20and%20Wilf's%20Conjecture.pdf)
-[2008-07-31 Intersecting Duals and Ideals of Numerical Semigroups](https://jeremylt.github.io/Presentations/20080731%20-%20Intersecting%20Duals%20and%20Ideals%20of%20Numerical Semigroups.pdf)
+
+[2008-07-31 Intersecting Duals and Ideals of Numerical Semigroups](https://jeremylt.github.io/Presentations/20080731%20-%20Intersecting%20Duals%20and%20Ideals%20of%20Numerical%20Semigroups.pdf)
 
