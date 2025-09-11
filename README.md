@@ -24,8 +24,8 @@
 
 [2024-05-24 PETSc with libCEED Performance Portable Matrix-Free Operators](https://jeremylt.github.io/Presentations/20240524%20-%20PETSc%20with%20libCEED%20Performance%20Portable%20Matrix-Free%20Operators.pdf)
 
-[2023-08-15 Ratel: High Order Solid Mechanics with libCEED and PETSc](https://jeremylt.github.io/Presentations/20230815%20-%20Ratel
-:%20High%20Order%20Solid%20Mechanics%20with%20libCEED%20and%20PETSc.pdf)
+[2023-08-15 Ratel: High Order Solid Mechanics with libCEED and PETSc](https://jeremylt.github.io/Presentations/20230815%20-%20Ratel%20High%20Order%20Solid%20Mechanics%20with%20libCEED%20and%20PETSc.pdf)
+
 [2022-09-27 Ratel Development Practices](https://jeremylt.github.io/Presentations/20220927%20-%20Ratel%20Development%20Practices.pdf)
 
 [2022-04-04 BDDC Preconditioned P-Multigrid for High-Order Finite Elements](https://jeremylt.github.io/Presentations/20220404%20-%20BDDC%20Preconditioned%20P-Multigrid%20for%20High-Order%20Finite%20Elements.pdf)
@@ -40,7 +40,7 @@
 
 [2020-08-12 libCEED Tutorial at CEED 4th Annual Meeting](https://jeremylt.github.io/Presentations/20200812%20-%20libCEED%20Tutorial%20at%20CEED%204AM.pdf)
 
-[2020-07-31 libCEED: A Case Study in Hidden Benefits of the Bridge Pattern](https://jeremylt.github.io/Presentations/20200731%20-%20libCEED:%20A%20Case%20Study%20in%20Hidden%20Benefits%20of%20the%20Bridge%20Pattern.pdf)
+[2020-07-31 libCEED: A Case Study in Hidden Benefits of the Bridge Pattern](https://jeremylt.github.io/Presentations/20200731%20-%20libCEED%20A%20Case%20Study%20in%20Hidden%20Benefits%20of%20the%20Bridge%20Pattern.pdf)
 
 [2020-01-15 Preconditioning with BDDC and FDM for High-Order Finite Elements with libCEED](https://jeremylt.github.io/Presentations/20200115%20-%20Preconditioning%20with%20BDDC%20and%20FDM%20for%20High%20Order%20Finite%20Elements%20with%20libCEED.pdf)
 
