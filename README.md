@@ -1,6 +1,6 @@
-## CV and Resume
-
 The source and PDFs of my presentations can be found on [GitHub](https://github.com/jeremylt/Presentations).
+
+## CV and Resume
 
 [CV](https://jeremylt.github.io/Presentations/00%20-%20Thompson%20Jeremy%20Luke%20CV.pdf)
 
@@ -77,5 +77,6 @@ The source and PDFs of my presentations can be found on [GitHub](https://github.
 [2009-05-27 Numerical Semigroups and Wilf's Conjecture](https://jeremylt.github.io/Presentations/20090527%20-%20Numerical%20Semigroups%20and%20Wilf's%20Conjecture.pdf)
 
 [2008-07-31 Intersecting Duals and Ideals of Numerical Semigroups](https://jeremylt.github.io/Presentations/20080731%20-%20Intersecting%20Duals%20and%20Ideals%20of%20Numerical%20Semigroups.pdf)
+
 
 
