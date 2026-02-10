@@ -1,0 +1,326 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%-------------------------------------------------------------------------------
+
+\documentclass{beamer}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{multicol}
+
+\DeclareMathOperator{\diag}{diag}
+
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{blue(ncs)}{rgb}{0.0, 0.45, 0.60}
+\definecolor{burgundy}{rgb}{0.5, 0.0, 0.13}
+
+\definecolor{cadet}{rgb}{0.33, 0.41, 0.47}
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
+
+\mode<presentation> {
+
+\usetheme{CambridgeUS}
+
+\usecolortheme{wolverine}
+
+\definecolor{gold}{HTML}{D4A017}
+\definecolor{darkgold}{HTML}{B7950B}
+
+\setbeamercolor{palette primary}{bg=cadet,fg=white}
+\setbeamercolor{palette secondary}{bg=airforceblue,fg=white}
+\setbeamercolor{palette tertiary}{bg=black,fg=white}
+\setbeamercolor{palette quaternary}{bg=cadet,fg=white}
+
+\setbeamercolor{frametitle}{bg=airforceblue,fg=white}
+
+\setbeamercolor{section number projected}{bg=black,fg=cadet}
+\setbeamercolor{item}{fg=black,bg=cadet}
+
+\setbeamertemplate{page number in head/foot}[framenumber]
+
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true}
+}
+
+\lstdefinestyle{colouredC}{ 
+  commentstyle=\color[gray]{0.4},
+  keywordstyle=\bfseries,
+  keywordstyle=[2]\color[rgb]{0.75, 0, 0},
+  keywordstyle=[3]\color[rgb]{0, 0.5, 0},
+  keywordstyle=[4]\color[rgb]{0, 0.5, 0},
+  keywordstyle=[5]\color[rgb]{0, 0, 0.75},
+  numberstyle=\tiny\color{mGray},
+  stringstyle=\color[rgb]{0, 0, 0.5},
+  basicstyle=\ttfamily,
+  language=C,
+  morekeywords=[3]{CeedInt, CeedScalar},
+}
+
+\lstdefinestyle{boxedC}{
+  style=colouredC,
+  numbers=left,
+  firstnumber=auto,
+  numberblanklines=true,
+  frame=trbL,
+  numberstyle=\tiny,
+  frame=leftline,
+  numbersep=7pt,
+  framesep=5pt,
+  framerule=10pt,
+  xleftmargin=15pt,
+  backgroundcolor=\color[gray]{0.97},
+  rulecolor=\color[gray]{0.90}%
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Ratel MI300A APUs]{Ratel - Using MI300A APUs with libCEED and PETSc} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Jeremy L Thompson} % Your name
+\institute[CU Boulder] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{University of Colorado Boulder \\ % Your institution for the title page
+\medskip
+\textit{jeremy@jeremylt.org} % Your email address
+}
+\date{11 Feb 2026} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+ 
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Ratel Team}
+
+\begin{center}
+\includegraphics[height=2.75cm]{Ratellogo.png}
+\end{center}
+
+{\flushleft
+
+Repository: https://gitlab.com/micromorph/ratel\\
+
+~\\
+
+Developers: Zach R. Atkins, Jed Brown, Fabio Di Gioacchino,\\
+\hspace{19mm} Leila Ghaffari, Zach Irwin, Rezgar Shakeri,\\
+\hspace{19mm} Ren Stengel, Jeremy L Thompson\\
+
+The authors acknowledge support by the Department of Energy, National Nuclear Security Administration, Predictive Science Academic Alliance Program (PSAAP) under Award Number DE-NA0003962.
+
+}
+
+\begin{center}
+\includegraphics[height=0.7cm]{psaap-center-logos}
+\end{center}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Matrix-Free Operators from libCEED}
+
+\includegraphics[height=5.0cm]{libCEEDAPI.png}
+
+~\\
+
+libCEED provides arbitrary order matrix-free FEM-like operators\\
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+\begin{center}
+\frametitle{MatCEED}
+
+\lstinline{MatCEED} wraps a linear \lstinline{CeedOperator}
+
+{\tiny
+\begin{lstlisting}[style=boxedC]
+MatCeedCreate(DM dm_x, DM dm_y, CeedOperator op_mult, CeedOperator op_mult_transpose, Mat *mat);
+MatCeedSetTime(Mat mat, PetscReal time);
+
+// COO assembly support
+MatCeedCreateMatCOO(Mat mat_ceed, Mat *mat_coo);
+MatCeedSetPreallocationCOO(Mat mat_ceed, Mat mat_coo);
+MatCeedAssembleCOO(Mat mat_ceed, Mat mat_coo);
+
+// Private - Core functionality
+MatMult_Ceed(Mat A, Vec X, Vec Y)
+MatMultTranspose_Ceed(Mat A, Vec Y, Vec X)
+
+// Private - PC support
+MatGetDiagonal_Ceed(Mat A, Vec D);
+MatGetDiagonalBlock_Ceed(Mat mat_ceed, Mat *mat_block);
+MatInvertBlockDiagonal_Ceed(Mat mat_ceed, const PetscScalar **values);
+MatInvertVariableBlockDiagonal_Ceed(Mat mat_ceed, PetscInt num_blocks, const PetscInt *block_sizes, PetscScalar *values);
+
+\end{lstlisting}
+}
+
+~\\
+
+\lstinline{MatCEED} can be used as a standard PETSc \lstinline{Mat}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{MI300As}
+
+\includegraphics[height=4.0cm]{UnifiedMemory.png}
+
+~\\
+
+Unified memory on MI300A removes CPU-GPU communication\\
+(See also AI MAX+395)\\
+
+~\\
+
+Mildly slower memory but generally worth the tradeoff\\
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Porting Outcomes}
+
+\begin{itemize}
+
+\item PETSc and libCEED changes to support APUs\\
+
+~\\
+
+\begin{itemize}
+
+\item Allocate all memory as device memory\\
+
+~\\
+
+\item Treat same pointer as host memory\\
+
+~\\
+
+\item Must forbid mismatched memory operations (\lstinline{memset})\\
+
+\end{itemize}
+
+~\\
+
+\item Unified memory improves performance on APU hardware\\
+
+~\\
+
+\begin{itemize}
+
+\item At least 5\% speedup with unified memory\\
+
+\end{itemize}
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Ogden}
+
+\includegraphics[height=6.5cm]{MPM_Ogden.png}\\
+
+Can run MPM models efficiently\\
+Reduced timestep setup costs (point migration, not shown)
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example - Press Simulation}
+
+\includegraphics[height=5cm]{iMPMCloseup.png}
+\hspace*{1cm}
+\includegraphics[height=5cm]{iMPMCompress.png}
+
+~\\
+
+Compression of mock HE grains (gold) and binder (pink) mixture\\
+
+(Reset background mesh to computational region on each timestep)\\
+
+Latest runs use $\sim$ \hspace{-6pt} 10B material points
+
+\end{center}
+\end{frame}
+ 
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Questions?}
+
+\begin{center}
+\includegraphics[height=2.75cm]{Ratellogo.png}
+\end{center}
+
+{\flushleft
+
+Repository: https://gitlab.com/micromorph/ratel\\
+
+~\\
+
+Ratel Team: Zach R. Atkins, Jed Brown, Fabio Di Gioacchino,\\
+\hspace{20mm} Leila Ghaffari, Zach Irwin, Rezgar Shakeri,\\
+\hspace{20mm} Ren Stengel, Jeremy L Thompson\\
+
+~\\
+
+Grant: Predictive Science Academic Alliance Program (DE-NA0003962)\\
+
+}
+
+\begin{center}
+\includegraphics[height=0.8cm]{psaap-center-logos}
+\end{center}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\end{document}
+
+%-------------------------------------------------------------------------------
