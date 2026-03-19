@@ -1,0 +1,1074 @@
+%-------------------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%-------------------------------------------------------------------------------
+
+\documentclass{beamer}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{multicol}
+
+\usepackage{amsmath}
+
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{blue(ncs)}{rgb}{0.0, 0.45, 0.60}
+\definecolor{burgundy}{rgb}{0.5, 0.0, 0.13}
+
+\definecolor{cadet}{rgb}{0.33, 0.41, 0.47}
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
+
+\lstdefinestyle{C}{
+  language=C,
+  emptylines=1,
+  breaklines=true,
+  basicstyle=\ttfamily\color{black},
+  identifierstyle=\ttfamily,
+  keywordstyle=\color[rgb]{0.0, 0.0, 1.0},
+  stringstyle=\color[rgb]{1.0, 0.0, 0.0},
+  commentstyle=\color{gray}\slshape,
+}
+
+\lstdefinestyle{assembly}{
+  emptylines=1,
+  breaklines=true,
+  basicstyle=\ttfamily\color{black},
+  identifierstyle=\ttfamily,
+  keywordstyle=\color[rgb]{1.0, 0.0, 1.0},
+  stringstyle=\color[rgb]{1.0, 0.0, 0.0},
+  commentstyle=\color{gray}\slshape,
+  morekeywords={vmovapd, vfmadd231pd,vfnmadd213pd, vmulpd},
+}
+
+\lstdefinestyle{qfunc}{
+  language=C,
+  emptylines=1,
+  breaklines=true,
+  basicstyle=\ttfamily\color{black},
+  commentstyle=\color{gray}\slshape,
+  moredelim=**[is][\color{applegreen}]{@}{@},
+  moredelim=**[is][\color{blue(ncs)}]{!}{!},
+  moredelim=**[is][\color{green!40!black}]{z}{z},
+  moredelim=**[is][\color{blue(ncs)!80}]{#}{#},
+  moredelim=**[is][\color{blue(ncs)!80!black}]{'}{'},
+}
+
+\lstdefinestyle{oper}{
+  language=C,
+  emptylines=1,
+  breaklines=true,
+  basicstyle=\ttfamily\color{black},
+  moredelim=**[is][\color{applegreen}]{@}{@},
+  moredelim=**[is][\color{blue(ncs)}]{!}{!},
+  moredelim=**[is][\color{burgundy}]{#}{#},
+  moredelim=**[is][\color{red}]{'}{'},
+  moredelim=**[is][\bf]{z}{z},
+}
+
+\mode<presentation> {
+
+\usetheme{CambridgeUS}
+
+\usecolortheme{wolverine}
+
+\definecolor{gold}{HTML}{D4A017}
+\definecolor{darkgold}{HTML}{B7950B}
+
+\setbeamercolor{palette primary}{bg=cadet,fg=white}
+\setbeamercolor{palette secondary}{bg=airforceblue,fg=white}
+\setbeamercolor{palette tertiary}{bg=black,fg=white}
+\setbeamercolor{palette quaternary}{bg=cadet,fg=white}
+
+\setbeamercolor{frametitle}{bg=airforceblue,fg=white}
+
+\setbeamercolor{section number projected}{bg=black,fg=cadet}
+\setbeamercolor{item}{fg=black,bg=cadet}
+
+\setbeamertemplate{page number in head/foot}[framenumber]
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+%-------------------------------------------------------------------------------
+%	TITLE PAGE
+%-------------------------------------------------------------------------------
+
+\title[libCEED Finite Element Library]{Motivating Matrix-Free Finite Elements} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Jeremy L Thompson} % Your name
+\institute[CU Boulder] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{University of Colorado Boulder \\ % Your institution for the title page
+\medskip
+\textit{jeremy@jeremylt.org} % Your email address
+}
+\date{19 Mar 2026} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Overview}
+
+Discretization of PDE for computation presents several choices\\
+
+~\\
+
+~\\
+
+Matrix-free finite elements present benefits and challenges\\
+
+~\\
+
+~\\
+
+We'll see how matrix-free finite elements works and the\\
+downstream choices and challenges that this discretization provides
+
+\end{center}
+\end{frame}
+ 
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+\tableofcontents
+\end{frame}
+
+%-------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+\section{Finite Elements}
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{End Goal}
+
+We need to transform equations:\vspace{-10px}
+
+\begin{equation*}
+\begin{split}
+- \nabla \cdot \sigma - \rho g &= 0,\, \text{in}\hspace{0.5em} \Omega\\[-5px]
+                             u &= \bar{u},\, \text{on}\hspace{0.5em} \partial \Omega^D\\[-5px]
+                \sigma \cdot n &= \bar{t},\, \text{on}\hspace{0.5em} \partial \Omega^N
+\end{split}
+\end{equation*}
+
+\vspace{10px}
+
+into simulations:
+
+\includegraphics[height=4.5cm]{SolidTwistExample}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Equation to Solve}
+
+Consider the general non-linear residual
+
+\vspace{-10px}
+
+\begin{equation*}
+F \left( u \right) - R = 0
+\end{equation*}
+
+\vspace{10px}
+
+where
+
+\begin{itemize}
+
+\item $F \left( u \right)$ represents our 'physics`
+
+\item $R$ is some 'right hand side' or forcing term
+
+\item $u$ is the unknown solution
+
+\end{itemize}
+
+~\\
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Problem}
+
+Computers like discrete equations/operations\\
+
+~\\
+
+~\\
+
+Our equation is continuous, and computers \emph{hate} that
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Another Problem}
+
+Solving these non-linear PDEs can be hard\\
+
+~\\
+
+~\\
+
+Really, really hard
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{First Decision}
+
+With the $L^2$ inner product
+
+\begin{equation*}
+\left\langle v, u \right\rangle = \int_\Omega v u \, dV
+\end{equation*}
+
+We can reformulate to the 'weak form':
+
+\begin{equation*}
+\left\langle v, f \left( u \right) \right\rangle = \int_\Omega v \cdot f_0 \left( u, \nabla u \right) + \nabla v : f_1 \left( u, \nabla u \right) \, dV = 0
+\end{equation*}
+
+Note:
+
+\begin{itemize}
+
+\item boundary terms are omitted here (integration by parts)
+
+\item $v$ is in some homogeneous space $V_0$
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{$f_0$ and $f_1$ Examples}
+
+Projection problem:
+
+\vspace{-10px}
+
+\begin{equation*}
+\begin{split}
+u &= g\\
+\int_\Omega v \cdot u \, dV &= \int_\Omega v g \, dV\\
+f_0 \left( u, \nabla u \right) &= u,\, f_1 \left( u, \nabla u \right) = 0
+\end{split}
+\end{equation*}
+
+~\\
+
+~\\
+
+Poisson problem:
+
+\vspace{-10px}
+
+\begin{equation*}
+\begin{split}
+-\nabla^2 u &= g\\
+\int_\Omega \nabla v : \nabla u \, dV - \int_{\partial \Omega} v \nabla u \cdot n \, dS &= \int_\Omega v g \, dV \\
+f_0 \left( u, \nabla u \right) &= 0,\, f_1 \left( u, \nabla u \right) = \nabla u
+\end{split}
+\end{equation*}
+
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Second Decision}
+
+How to discretize?
+
+\begin{itemize}
+
+\item $u, v \in V$\\
+
+~\\
+
+\item Different $V$ give different properties\\
+
+~\\
+
+\item We select $V$ to be the space of piecewise continuous polynomials\\
+
+~\\
+
+\item No continuity in derivatives (not splines)
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Second Decision}
+
+\includegraphics[height=4.7cm]{libCEEDAPI}
+
+T(otal)-vector represents discretization\\
+
+~\\
+
+Want solution values on red dots (Degrees of Freedom [DoF])\\
+
+~\\
+
+Fitting piecewise polynomial to red dots gives continuous solution
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Third Decision}
+
+Need to convert integration to a discrete problem\\
+
+~\\
+
+\begin{itemize}
+
+\item Quadrature rules take values at points to compute integral\\
+
+~\\
+
+\item Piecewise nature means each element can be integrated separately\\
+
+~\\
+
+\item Workflow:
+
+\begin{enumerate}
+
+\item Map to interpolating polynomial
+
+\item Evaluate values/derivatives at quadrature points
+
+\item Evaluate $f_0$, $f_1$
+
+\item Multiply by quadrature weights
+
+\item Transpose process to return to DoFs
+
+\end{enumerate}
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Third Decision}
+
+\includegraphics[height=4.7cm]{GaussVsTrap}
+
+Why the extra work of interpolating to quadrature points?\\
+
+~\\
+
+Better accuracy in discrete integration\\
+
+~\\
+
+Gauss-Legendre accurate for polynomials up to $2n - 1$
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Third Decision}
+
+\includegraphics[height=4.7cm]{libCEEDAPI}
+
+E(lement)-vector represents each 'piece' of our solution polynomial\\
+
+~\\
+
+DoFs on blue dots are red dots on a specific element\\
+
+~\\
+
+{\color{blue(ncs)}$B$} maps to the quadrature points - green dots
+
+{\color{applegreen}$D$} evaluates $f_0$, $f_1$, multiply by quadrature weights
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Galerkin Form}
+
+Galerkin form for an arbitrary second order PDE:\\
+
+\begin{equation*}
+\sum_e \mathcal{E}^T \left[ \left( {\color{blue(ncs)}\mathbf{N}}^e \right)^T {\color{applegreen}\mathbf{W}}^e \Lambda \left( {\color{applegreen}f_0} \left( u^e, \nabla u^e \right) \right) + \sum_{i = 0}^{d - 1} \left( {\color{blue(ncs)}\mathbf{D}}_i^e \right)^T {\color{applegreen}\mathbf{W}}^e \Lambda \left( {\color{applegreen}f_1} \left( u^e, \nabla u^e \right) \right) \right] = 0
+\label{eq:galerkin_form}
+\end{equation*}
+
+\begin{itemize}
+
+\item $\mathcal{E}$ - element assembly/restriction operator\\
+
+\item ${\color{blue(ncs)}\mathbf{N}}^e$ - interpolation to quadrature points\\
+
+\item ${\color{blue(ncs)}\mathbf{D}}_i^e$ - derivatives at quadrature points\\
+
+\item ${\color{applegreen}\mathbf{W}}^e$ - quadrature weights\\
+
+\item $\Lambda$ - pointwise multiplication at quadrature points\\
+
+\item $u^e = {\color{blue(ncs)}\mathbf{N}}^e \mathcal{E}^e u$ and $\nabla u^e = \lbrace {\color{blue(ncs)}\mathbf{D}}_i^e \mathcal{E}^e u \rbrace_{i = 0}^{d - 1}$
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Wait, What?!?}
+
+Non-linear problem:\\
+
+\vspace{-20px}
+
+\begin{equation*}
+F \left( u \right) - R = 0
+\end{equation*}
+
+~\\
+
+Weak form:\\
+
+\vspace{-20px}
+
+\begin{equation*}
+\left\langle v, f \left( u \right) \right\rangle = \int_\Omega v \cdot f_0 \left( u, \nabla u \right) + \nabla v : f_1 \left( u, \nabla u \right) \, dV = 0
+\end{equation*}
+
+~\\
+
+Galerkin form:\\
+
+\vspace{-20px}
+
+\begin{equation*}
+\sum_e \mathcal{E}^T \left[ \left( {\color{blue(ncs)}\mathbf{N}}^e \right)^T {\color{applegreen}\mathbf{W}}^e \Lambda \left( {\color{applegreen}f_0} \left( u^e, \nabla u^e \right) \right) + \sum_{i = 0}^{d - 1} \left( {\color{blue(ncs)}\mathbf{D}}_i^e \right)^T {\color{applegreen}\mathbf{W}}^e \Lambda \left( {\color{applegreen}f_1} \left( u^e, \nabla u^e \right) \right) \right] = 0
+\end{equation*}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{What I'm Handwaving}
+
+\begin{itemize}
+
+\item Elements can have deformed shapes (unstructured meshes)\\
+
+~\\
+
+\item Need 'geometric' factors for each individual element\\
+(Change of coordinate systems from physical to reference)\\
+
+~\\
+
+\item ${\color{burgundy}\mathcal{P}}$ is parallel communication (supercomputers!)\\
+
+~\\
+
+\item $R$ (and its weak analogue) can be considered part of $f_0$ or separate\\
+
+~\\
+
+\item Boundary terms are similar but 1 dimension lower (i.e. 3D $\rightarrow$ 2D)
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\section{Matrix-Free}
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Traditional Approach}
+
+\begin{itemize}
+
+\item The Galerkin form naturally creates a sparse matrix for linear $F \left( u \right)$\\
+
+~\\
+
+\item This sparse matrix can be solved with linear algebra\\
+
+~\\
+
+\item Two problems:\\
+
+~\\
+
+\begin{enumerate}
+
+\item $F \left( u \right)$ is not usually linear\\
+
+~\\
+
+\item Sparse matrices don't use hardware optimally\\
+
+\end{enumerate}
+
+~\\
+
+\item Big Idea: perform the operations without forming a matrix
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Modern Hardware}
+
+\includegraphics[height=5.5cm]{peakFlopsAndBandwidth_tall}
+\hspace{1cm}
+\includegraphics[height=5.5cm]{peakRatio_tall}
+
+Modern hardware has lower memory bandwidth than FLOPs
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Matrix-Free}
+
+\includegraphics[height=5.5cm]{assembledVsMatrixFree_tall}
+\hspace{1cm}
+\includegraphics[height=5.5cm]{assembledVsMatrixFreeBalance_tall}
+
+{\small Requirements for matrix-vector product with sparse matrix vs matrix-free\\ for screened Poisson $\nabla^2 u - \alpha^2 u = f$ in 3D}\\
+
+{\bf Matrix-free representations using tensor product bases\\better match modern hardware limitations}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\section{Non-Linear Problem}
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Non-linear Problem}
+
+We still have a non-linear problem\\
+
+~\\
+
+~\\
+
+Linear algebra solves \emph{linear} problems\\
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Newton's Method}
+
+Many non-linear solvers fit into the 'Newton' family\\
+
+\includegraphics[height=4.5cm]{NewtonIteration}
+
+In Newton's method, we form a tangent line\\
+
+~\\
+
+The \emph{line}ar equation is easy to solve\\
+
+~\\
+
+In higher dimensions, the line becomes a (hyper)plane
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Newton's Method}
+
+We want to solve
+
+\begin{equation*}
+F \left( u \right) - R = 0
+\end{equation*}
+
+\vspace{10px}
+
+We can instead solve a series of 'tangent plane' problems
+
+\vspace{-10px}
+
+\begin{equation*}
+F \left( u_k \right) - R + J \left( u_k \right) \left( u_k - u_{k + 1} \right) = 0
+\end{equation*}
+
+$u_{k + 1}$ provides closer estimates of the true solution $u_*$\\
+
+~\\
+
+We'll denote $w = u_k - u_{k + 1}$
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{A New Problem}
+
+Ok, but we still need to form the tangent plane $J \left( u_k \right)$\\
+
+~\\
+
+~\\
+
+This feels like we keep changing what the problem is!
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Beauty}
+
+Weak form:\\
+
+\begin{equation*}
+\left\langle v, f \left( u \right) \right\rangle = \int_\Omega v \cdot f_0 \left( u, \nabla u \right) + \nabla v : f_1 \left( u, \nabla u \right) \, dV = 0
+\end{equation*}
+
+We want to take the derivative of this weak form\\
+
+~\\
+
+Note:
+
+\begin{itemize}
+
+\item $\frac{d}{dx} \left( f \left( x \right) + g \left( x \right) \right) = f' \left( x \right) + g' \left( x \right)$\\
+
+~\\
+
+\item $\frac{d}{dx} f \left( g \left( x \right) \right) = f' \left( g \left( x \right) \right) g' \left( x \right)$
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Beauty}
+
+Weak form derivative:\\
+
+\begin{equation*}
+\langle v, J \left( u_k \right) w \rangle = \int_{\Omega}
+\left[ \begin{array}{c c}
+v^T & \left( \nabla v \right)^T
+\end{array} \right]
+\left[ \begin{array}{c c}
+f_{0, 0} & f_{0, 1}\\
+f_{1, 0} & f_{1, 1}
+\end{array} \right]
+\left[ \begin{array}{c}
+w \\ \nabla w
+\end{array} \right]
+\label{eq:jacobian_form}
+\end{equation*}
+
+~\\
+
+Note:
+
+\begin{itemize}
+
+\item $f_{i, 0} = \frac{\partial f_i}{\partial u} \left( u_k, \nabla u_k \right)$\\
+
+~\\
+
+\item $f_{i, 1} = \frac{\partial f_i}{\partial \nabla u} \left( u_k, \nabla u_k \right)$\\
+
+~\\
+
+\item Can be discretized the same way as before
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Wait, What?!? - Non-linear Equation}
+
+Non-linear problem:\\
+
+\vspace{-20px}
+
+\begin{equation*}
+F \left( u \right) - R = 0
+\end{equation*}
+
+~\\
+
+Weak form:\\
+
+\vspace{-20px}
+
+\begin{equation*}
+\left\langle v, f \left( u \right) \right\rangle = \int_\Omega v \cdot f_0 \left( u, \nabla u \right) + \nabla v : f_1 \left( u, \nabla u \right) \, dV = 0
+\end{equation*}
+
+~\\
+
+Galerkin form:\\
+
+\vspace{-20px}
+
+\begin{equation*}
+\sum_e \mathcal{E}^T \left[ \left( {\color{blue(ncs)}\mathbf{N}}^e \right)^T {\color{applegreen}\mathbf{W}}^e \Lambda \left( {\color{applegreen}f_0} \left( u^e, \nabla u^e \right) \right) + \sum_{i = 0}^{d - 1} \left( {\color{blue(ncs)}\mathbf{D}}_i^e \right)^T {\color{applegreen}\mathbf{W}}^e \Lambda \left( {\color{applegreen}f_1} \left( u^e, \nabla u^e \right) \right) \right] = 0
+\end{equation*}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Wait, What?!? - Linear Equation}
+
+Linearized problem:\\
+
+\vspace{-20px}
+
+\begin{equation*}
+F \left( u_k \right) - R + J \left( u_k \right) \left( u_k - u_{k + 1} \right) = 0
+\end{equation*}
+
+~\\
+
+Weak form:\\
+
+\vspace{-20px}
+
+\begin{equation*}
+\langle v, J \left( u_k \right) w \rangle = \int_{\Omega}
+\left[ \begin{array}{c c}
+v^T & \left( \nabla v \right)^T
+\end{array} \right]
+\left[ \begin{array}{c c}
+f_{0, 0} & f_{0, 1}\\
+f_{1, 0} & f_{1, 1}
+\end{array} \right]
+\left[ \begin{array}{c}
+w \\ \nabla w
+\end{array} \right]
+\end{equation*}
+
+~\\
+
+Galerkin form:\\
+
+\vspace{-20px}
+
+\begin{equation*}
+\sum_e \mathcal{E}^T \left[ \left( {\color{blue(ncs)}\mathbf{N}}^e \right)^T {\color{applegreen}\mathbf{W}}^e \Lambda \left( {\color{applegreen}f^*_0} \left( w^e, \nabla w^e \right) \right) + \sum_{i = 0}^{d - 1} \left( {\color{blue(ncs)}\mathbf{D}}_i^e \right)^T {\color{applegreen}\mathbf{W}}^e \Lambda \left( {\color{applegreen}f^*_1} \left( w^e, \nabla w^e \right) \right) \right] = 0
+\end{equation*}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\section{Preconditioning}
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{A New Problem}
+
+We have a discrete system we can solve efficiently\\
+
+~\\
+
+~\\
+
+But we still have a problem\\
+
+~\\
+
+~\\
+
+(Our problems are getting easier to tackle though!)
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Condition Number}
+
+Matrix-free representation of the linear problem restricts solvers\\
+
+~\\
+
+~\\
+
+Krylov subspace methods only need the matrix-vector product $A x$,\\
+not the assembled matrix $A$\\
+
+~\\
+
+~\\
+
+But Krylov subspace methods are sensitive to condition number\\
+
+~\\
+
+~\\
+
+High-order finite elements are more efficient matrix-free,\\
+but high-order finite elements have a higher condition number
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Preconditioning}
+
+Preconditioning improves the condition number of $A$\\
+
+~\\
+
+~\\
+
+Big Idea: $P^{-1} A \approx I$ has a better condition number
+
+~\\
+
+~\\
+
+Challenge: Finding efficient $P^{-1}$ can difficult\\
+
+~\\
+
+~\\
+
+The Fix: This is a rich research area with lots of options
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\section{Cool Results}
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example - Brittle Fracture}
+
+\includegraphics[height=5cm]{compressive-shear-damage-FEM}
+
+~\\
+
+Quasistatic simulation of a compressive shear test for a generic brittle material
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example - Schwarz Pendulum}
+
+\includegraphics[height=3.5cm]{dynamic-pendulum}
+
+~\\
+
+Dynamic simulation of 8 Schwarz-P cells with an applied traction force creating pendulum-like motion
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example - Sinker Simulation}
+
+\includegraphics[height=3.5cm]{sinker-MPM-FEM}
+
+~\\
+
+Quasistatic simulation of a cylinder with a dense high-modulus inclusion surrounded by a low-density low-modulus near-incompressible "foam"
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Example - Press Simulation}
+
+\includegraphics[height=5cm]{iMPMCloseup}
+\hspace*{1cm}
+\includegraphics[height=5cm]{iMPMCompress}
+
+~\\
+
+Compression of mock HE grains (gold) and binder (pink) mixture\\
+
+(Reset background mesh to computational region on each timestep)
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\section{Questions}
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Questions?}
+
+\begin{center}
+\includegraphics[height=2.75cm]{libCEEDlogo.png}
+\includegraphics[height=2.75cm]{Ratellogo.png}
+\end{center}
+
+{\flushleft
+
+libCEED Repo: \href{https://github.com/CEED/libCEED}{https://github.com/CEED/libCEED}\\
+Ratel Repo: \hspace*{0.39cm} \href{https://gitlab.com/micromorph/ratel}{https://gitlab.com/micromorph/ratel}\\
+
+~\\
+
+Grant: Predictive Science Academic Alliance Program (DE-NA0003962)\\
+
+}
+
+\begin{center}
+\includegraphics[height=0.8cm]{psaap-center-logos.png}
+\end{center}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\titlepage % Print the title page
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------------------------

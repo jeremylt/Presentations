@@ -8,6 +8,8 @@ The source and PDFs of my presentations can be found on [GitHub](https://github.
 
 ## Presentations
 
+[2026-03-19 Motivating Matrix-Free Finite Elements](https://jeremylt.github.io/Presentations/20260319%20-%20Motivating%20Matrix-Free%20Finite%20Elements.pdf)
+
 [2026-02-11 Ratel: Using MI300A APUs with libCEED and PETSc](https://jeremylt.github.io/Presentations/20260211%20-%20Ratel%20Using%20MI300A%20APUs%20with%20libCEED%20and%20PETSc.pdf)
 
 [2025-11-07 Performant Matrix-Free MPM with Ratel and libCEED](https://jeremylt.github.io/Presentations/20251107%20-%20Performant%20Matrix-Free%20MPM%20with%20Ratel%20and%20libCEED.pdf)
