@@ -1,0 +1,685 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%-------------------------------------------------------------------------------
+
+\documentclass{beamer}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\usepackage{multicol}
+
+\DeclareMathOperator{\diag}{diag}
+
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{blue(ncs)}{rgb}{0.0, 0.45, 0.60}
+\definecolor{burgundy}{rgb}{0.5, 0.0, 0.13}
+
+\definecolor{cadet}{rgb}{0.33, 0.41, 0.47}
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
+
+\mode<presentation> {
+
+\usetheme{CambridgeUS}
+
+\usecolortheme{wolverine}
+
+\definecolor{gold}{HTML}{D4A017}
+\definecolor{darkgold}{HTML}{B7950B}
+
+\setbeamercolor{palette primary}{bg=cadet,fg=white}
+\setbeamercolor{palette secondary}{bg=airforceblue,fg=white}
+\setbeamercolor{palette tertiary}{bg=black,fg=white}
+\setbeamercolor{palette quaternary}{bg=cadet,fg=white}
+
+\setbeamercolor{frametitle}{bg=airforceblue,fg=white}
+
+\setbeamercolor{section number projected}{bg=black,fg=cadet}
+\setbeamercolor{item}{fg=black,bg=cadet}
+
+\setbeamertemplate{page number in head/foot}[framenumber]
+
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true}
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[AI for RSEng]{AI for Research Software Engineering
+} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Jeremy L Thompson} % Your name
+\institute[Helmholz Hereon] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{Helmholz-Zentrum Hereon \\ % Your institution for the title page
+\medskip
+\textit{jeremy@jeremylt.org} % Your email address
+}
+\date{14 July 2026} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\section{Overview}
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Overview}
+
+Research Software Engineers must respect both\\\textbf{software development best practices} and \textbf{research ethics}
+
+~\\
+
+\textbf{Not all development best practices} for LLM (AI) based tooling\\\textbf{map easily} from industry to research software development
+
+~\\
+
+\textbf{Research ethics impose additional constraints} beyond\\industry software development considerations
+
+~\\
+
+\tcbox[colback=white,colframe=purple,size=fbox,boxrule=0.8pt,on line]{Key takeaway: \textbf{LLMs are not a magic bullet}}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Software as First Class Artifacts}
+
+Many academic groups (San Francisco DORA, JOSS, etc) advocate for\\research software as first class artifacts (like papers)\\
+
+~\\
+
+\includegraphics[height=2cm]{sfdora.png} \hspace{10mm} \includegraphics[height=2cm]{joss.png}\\
+\tcbox[colback=white,colframe=red,size=fbox,boxrule=0.8pt,on line]{\href{https://sfdora.org}{https://sfdora.org}} \hspace{25mm} \tcbox[colback=white,colframe=red,size=fbox,boxrule=0.8pt,on line]{\href{https://joss.theoj.org}{https://joss.theoj.org}}
+
+~\\
+
+RSEs need to ensure \textbf{quality}, \textbf{clarity}, \textbf{testing},\\and \textbf{documentation} to deliver first class software
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\section{Industry Best Practices}
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Industry Best Practices}
+
+LLM based coding tools are subject to GIGO
+
+~\\
+
+\includegraphics[height=2cm]{garbage.png} \hspace{10mm} \includegraphics[height=2cm]{garbage.png}\\
+Garbage In \hspace{3mm} $\rightarrow$ \hspace{3mm} Garbage Out
+
+~\\
+
+Best practices for input (codebases, planning) and output (process, review)
+
+~\\
+
+'Healthier' codebases more likely to result in higher quality LLM output
+
+~\\
+
+Best practices for human development $\rightarrow$ good codebases for LLM
+
+~\\
+
+High developer skill required for higher quality LLM output
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Caveats}
+
+Quality research on LLM best practices hard to identify
+
+~\\
+
+\begin{itemize}
+
+\item Massive amounts of money in LLM research
+
+~\\
+
+\item Profit motives can complicate research context
+
+~\\
+
+\item Modern research more likely to include positive, definitive wording
+(LLM are prone to this as well)
+
+~\\
+
+\item Included impressions from professional discussions, blogs, etc
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Code Health}
+
+CodeHealth™ is a quality metric used by CodeScene (paid software suite)
+
+~\\
+
+Corresponds to many 'code smell' concerns
+
+~\\
+
+\begin{itemize}
+
+\item Code cohesion, complexity
+
+~\\
+
+\item Adherence to DRY
+
+~\\
+
+\item Object and method complexity
+
+\end{itemize}
+
+~\\
+
+Higher CodeHealth $\rightarrow$ fewer failing tests after LLM refactoring
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Personal Discussions}
+
+Personal discussions and blogs largely align with CodeScene research
+
+~\\
+
+\includegraphics[height=1.5cm]{discussion.png}
+
+~\\
+
+Skilled developers needed to monitor/fix LLM output quality
+
+~\\
+
+A clear plan and 'definition of done' before development helps greatly
+
+~\\
+
+Overall design and style consistency of particular note
+
+~\\
+
+High developer skill required for higher quality LLM output
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{High Skill Needed}
+
+RSE organizations frequently list skills and training as a weakness
+
+~\\
+
+\tcbox[colback=white,colframe=purple,size=fbox,boxrule=0.8pt,on line]{\includegraphics[height=3.5cm]{derse-concerns.png}}
+deRSE list of known community issues
+
+~\\
+
+LLM is not a replacement for professional software skills
+
+~\\
+
+Unfortunately, non-careful LLM usage can also inhibit skill formation
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{De-skilling}
+
+LLM present risk of de-skilling when too much cognition is offloaded
+
+~\\
+
+\includegraphics[height=3.5cm]{deskilling.png}\\
+Skill erosion loop (Rinta-Kahila et al.)
+
+~\\
+
+
+Research software as first class artifacts requires clarity, correctness
+
+~\\
+
+De-skilling presents an important risk to clarity and correctness for RSE
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Summary}
+
+RSEs need \textbf{training in development best practices} to best use LLM
+
+~\\
+
+Skills and training is a \textbf{known weakness} for RSEs
+
+~\\
+
+LLM usage can result in \textbf{de-skilling} or \textbf{inhibit skill formation}
+
+~\\
+
+\textbf{Curating research software like papers} parallels industry best practices
+
+~\\
+~\\
+
+\tcbox[colback=white,colframe=purple,size=fbox,boxrule=0.8pt,on line]{Recommendation: Ensure good development skills before using LLM}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\section{Code Review}
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Code Review}
+
+LLM based code review is a promising application
+
+~\\
+
+\includegraphics[height=4cm]{copilot.png}\\
+
+~\\
+
+Code review is high skill activity, so de-skilling risk still applies
+
+~\\
+
+Note: LLM based code review appears to consume many tokens
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Options}
+
+Some popular LLM based code review tools:
+
+~\\
+
+\begin{itemize}
+
+\item GitHub Copilot
+
+~\\
+
+\item Coderabbit
+
+~\\
+
+\item Cursor
+
+~\\
+
+\item Claude Code
+
+~\\
+
+\item And many, many more
+
+\end{itemize}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Caveats}
+
+Total token usage and costs per token continue to rise
+
+~\\
+
+Most popular models controlled by large US tech companies
+
+~\\
+
+\includegraphics[height=.75cm]{usa.png} \hspace{10mm} \includegraphics[height=.75cm]{claudecode.png} \hspace{5mm} \includegraphics[height=.75cm]{openai.png} \hspace{5mm} \includegraphics[height=.75cm]{cursor.png} \hspace{5mm} \includegraphics[height=.75cm]{gemini.png} \hspace{5mm} \includegraphics[height=.75cm]{githubcopilot.png}\\
+
+~\\
+
+SLMs (Small Language Models) on local hardware possible alternative
+
+~\\
+
+SLM options: Qwen, Gemma, Phi, SmolLM, Ministral, etc
+
+~\\
+
+Offers data control, no API costs, but less context and complexity
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\section{Research Ethics}
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Relevant Points}
+
+Three key ethics points:
+
+~\\
+
+\begin{itemize}
+
+\item Research requires \textbf{transparency} in methods, including tools
+
+~\\
+
+\item Software must remain \textbf{legitimate and citable} research
+
+~\\
+
+\item Must \textbf{not plagiarize} work of others, even inadvertently
+
+\end{itemize}
+
+~\\
+
+~\\
+
+\tcbox[colback=white,colframe=purple,size=fbox,boxrule=0.8pt,on line]{See European Code of Conduct for Research Integrity, among others}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Disclosure}
+
+Disclosure is a natural requirement
+
+~\\
+
+\begin{itemize}
+
+\item Disclosure is at the heart of science
+
+~\\
+
+\item Disclosure improves reproducibility
+
+~\\
+
+\item Successful methods can be re-used
+
+~\\
+
+\item Unsuccessful methods can be avoided
+
+\end{itemize}
+
+~\\
+
+BLUF: If you are uncomfortable stating what you did\\
+the software/research is not ready to release and share
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Open Source Policies}
+
+Disclosure aligns with Open Source policies permitting LLM
+
+~\\
+
+\begin{itemize}
+
+\item Many open source project have LLM policies
+
+~\\
+
+\item Disclosure usually required if LLM output permitted
+
+~\\
+
+\item Disclosure can improve code review
+
+\end{itemize}
+
+~\\
+~\\
+
+See also Melissa Weber Mendonça's list of open source policies:\\
+\tcbox[colback=white,colframe=red,size=fbox,boxrule=0.8pt,on line]{\href{https://github.com/melissawm/open-source-ai-contribution-policies}{https://github.com/melissawm/open-source-ai-contribution-policies}}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Plagiarism}
+
+Dr Tim Davis prompted Copilot to generate his copyrighted CSparse code\\
+without attribution and violating LGPL licensing
+
+~\\
+
+\includegraphics[height=4.2cm]{TimDavisTweet.png}
+
+~\\
+
+Researchers are ultimately responsible for the code they create
+
+~\\
+
+Accidental plagiarism via LLM is still an ethics violation
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Citation Errors}
+
+GPT-4 has fabricated or generated erroneous citations
+
+~\\
+
+Generated citations can have slightly flawed data
+
+~\\
+
+LLM output can omit specific training data related to the prompt
+
+~\\
+~\\
+
+RSE should guard against research process inversion:\\research $\rightarrow$ reach conclusions {\color{green} \checkmark}\\conclusions $\rightarrow$ find research to support {\color{red} $\times$}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Citation Bias}
+
+LLM generated citations reinforce bias in citations
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Summary}
+
+\textbf{Easy to accidentally plagiarize} with heavy usage
+
+~\\
+
+LLM generated citations can be \textbf{fabricated, flawed, or reinforce bias}
+
+~\\
+~\\
+
+\tcbox[colback=white,colframe=purple,size=fbox,boxrule=0.8pt,on line]{\textbf{RSEs are ultimately responsible for our work}, no matter the process}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\section{Summary}
+%-------------------------------------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Summary}
+
+\tcbox[colback=white,colframe=red,size=fbox,boxrule=0.8pt,on line]{Key takeaway: \textbf{LLMs are not a magic bullet}}
+
+~\\
+~\\
+
+RSEs who let LLM code for them will have bad code
+
+~\\
+
+\tcbox[colback=white,colframe=purple,size=fbox,boxrule=0.8pt,on line]{We need to ensure good development skills before integrating LLM}
+
+~\\
+~\\
+
+RSEs who let LLM research for them will violate ethics
+
+~\\
+
+\tcbox[colback=white,colframe=purple,size=fbox,boxrule=0.8pt,on line]{We are ultimately responsible for our work, no matter the process}
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Questions? Comments?}
+
+Community comments, resources, and questions invited
+
+\tcbox[colback=white,colframe=red,size=fbox,boxrule=0.8pt,on line]{\href{https://github.com/jeremylt/personal_website/pull/3}{https://github.com/jeremylt/personal\_website/pull/3}}
+
+~\\
+~\\
+
+\tcbox[colback=white,colframe=purple,size=fbox,boxrule=0.8pt,on line]{Key takeaway: \textbf{LLMs are not a magic bullet}}
+
+~\\
+
+\tcbox[colback=white,colframe=purple,size=fbox,boxrule=0.8pt,on line]{\textbf{RSE need good development skills} before integrating LLM}
+
+~\\
+
+\tcbox[colback=white,colframe=purple,size=fbox,boxrule=0.8pt,on line]{\textbf{RSEs are ultimately responsible for our work}, no matter the process}
+
+\end{center}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\begin{frame}[noframenumbering]
+\titlepage % Print the title page
+\end{frame}
+
+%-------------------------------------------------------------------------------
+
+\end{document}
+
+%-------------------------------------------------------------------------------
