@@ -67,8 +67,8 @@
 } % The short title appears at the bottom of every slide, the full title is only on the title page
 
 \author{Jeremy L Thompson} % Your name
-\institute[Helmholz Hereon] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
-{Helmholz-Zentrum Hereon \\ % Your institution for the title page
+\institute[Helmholtz Hereon] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{Helmholtz-Zentrum Hereon \\ % Your institution for the title page
 \medskip
 \textit{jeremy@jeremylt.org} % Your email address
 }
@@ -202,6 +202,77 @@ Quality research on LLM best practices hard to identify
 
 \begin{frame}
 \begin{center}
+\frametitle{Software Development Life Cycle}
+
+SDLC (Software Development Life Cycle) roughly has 3 parts
+
+~\\
+
+\begin{itemize}
+
+\item Planning: what should be coded and how?
+
+~\\
+
+\item Development: write the code!
+
+~\\
+
+\item Review: did we write the right code?
+
+\end{itemize}
+
+~\\
+
+Industry best practices require SDLC while academic coding often doesn't
+
+~\\
+
+LLM code generation moves more effort into Planning \& Review
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
+\frametitle{Software Development Life Cycle}
+
+Good SDLC (Software Development Life Cycle) helps guide LLM usage
+
+~\\
+
+\begin{itemize}
+
+\item Planning: RSEs decide what code is needed
+
+~\\
+
+\item Development: LLM prompted to generate code
+
+~\\
+
+\item Review: RSEs decide if the generated code is correct
+
+\end{itemize}
+
+~\\
+
+Planning \& Review critical to ensure higher quality LLM output\\
+(See also Test Driven Design (TDD))
+
+~\\
+
+This same pattern can be included in smaller loops to control risk/error
+
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\begin{center}
 \frametitle{Code Health}
 
 CodeHealth™ is a quality metric used by CodeScene (paid software suite)
@@ -247,7 +318,7 @@ Personal discussions and blogs largely align with CodeScene research
 
 ~\\
 
-Skilled developers needed to monitor/fix LLM output quality
+Skilled developers needed to plan, monitor, fix LLM output
 
 ~\\
 
@@ -498,7 +569,7 @@ Disclosure is a natural requirement
 ~\\
 
 BLUF: If you are uncomfortable stating what you did\\
-the software/research is not ready to release and share
+then the software/research is not ready to release and share
 
 \end{center}
 \end{frame}
@@ -543,7 +614,7 @@ See also Melissa Weber Mendonça's list of open source policies:\\
 \frametitle{Plagiarism}
 
 Dr Tim Davis prompted Copilot to generate his copyrighted CSparse code\\
-without attribution and violating LGPL licensing
+LLM generated code without attribution, violating LGPL licensing
 
 ~\\
 
